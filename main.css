@@ -17,27 +17,9 @@ body {
     background-size: 100% auto;
   }
 
-  nav {
-      display:flex;
-      justify-content: flex-start;
-      font-size: 20px;
-      line-height:55px;
-      background-color: rgb(15, 26, 26);
-      color: whitesmoke;
-      height:60px;
-  }
 
-  input.form-control {
-    margin: 0px 5px 10px 5px;
-    border:1px solid #1d3030;
+  div.players-and-cards {
+    display:flex;
+    justify-content: space-evenly;
+    flex-flow: row wrap;
   }
-
-  div.modal-content {
-    background-color:#eff5f4;
-    border-radius: 25px;
-  }
-  
-  button.btn.btn-primary {
-    background-color: #1d302b;
-  }
-

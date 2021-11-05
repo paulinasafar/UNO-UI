@@ -1,17 +1,25 @@
-//Modal dialogue box
+//***************************UNO PLAYER NAMES****************************************************
+
 const myModal = new bootstrap.Modal(document.getElementById("playerNames"));
 myModal.show();
 
-const playerNames = [];
+
+//***************************UNO VARIABLES****************************************************
+let listOfPlayers=[];
+const playerNamesForm = document.getElementById('playerNamesForm');
 const closeButton = document.getElementById('closeButton');
 const inputValues = document.getElementsByClassName('form-control');
 const playerName1 = document.getElementById('playername1');
 const playerName2 = document.getElementById('playername2');
 const playerName3 = document.getElementById('playername3');
 const playerName4 = document.getElementById('playername4');
+let gameID = ""; // ID of the game returned by the API
+const gameStart = "http://nowaunoweb.azurewebsites.net/api/Game/Start";
 
-//Listening for player names + checking if all 4 names are inputed
-document.getElementById('playerNamesForm').addEventListener('submit', function () {
+
+//***************************UNO MODAL BOX****************************************************
+
+playerNamesForm.addEventListener('submit', function () {
     for (let i = 0; i < inputValues.length; ++i) {
         let playerName = inputValues[i].value;
         if (!playerName) {
@@ -19,25 +27,49 @@ document.getElementById('playerNamesForm').addEventListener('submit', function (
             EventTarget.preventDefault();
             break;
         } else {
-            playerNames.push(playerName);
+            listOfPlayers.push(playerName);
+            myModal.hide();
         }
     }
+    console.log(listOfPlayers);
+    return listOfPlayers;
+})
+
+
+
+
+//***************************UNO GAME START****************************************************
+
+
+async function startGame() {
+    let response = await fetch(gameStart, {
+        method: 'POST',
+        body: JSON.stringify(playerNames),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        }
+    });
     console.log(playerNames);
-    return playerNames;
-})
 
-//Listening for players with same names
-document.getElementById('playerNamesForm').addEventListener('keyup', function () {
-        for(let i = 0; i < playerName1; ++i)
-})
+    if (response.ok) {
+        let result = await response.json();
+        console.log(result);
+        gameID = result.id;
+    } else {
+        alert("HTTP-Error: " + response.status);
+    }
+}
+if (playerNames.length == 3) {
+    startGame();
+}
 
-// for (let i = 0; i < playerNames.length; ++i) {
-//     let previousName = String(playerNames[i]);
-//     for (let j = i + 1; i < playerNames.length; ++i) {
-//         let nextName = String(playerNames[j]);
-//         if (previousName.localeCompare(nextName) === 0) {
-//             alert("Player " + String(playerNames[i]) + " already exists. Please enter a different player.");
-//             myModal.show();  //FUNKTIONIERT NICHT!
-//         }
-//     }
-// }
+
+
+//***************************UNO CARDS METHODS****************************************************
+
+
+
+//***************************UNO ANIMATIONS****************************************************
+
+
+
