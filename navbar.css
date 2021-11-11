@@ -15,10 +15,11 @@ nav {
 
   /* Dropdown Button */
   .dropbtn {
-    background-color: #1d302b;
+    background-color: rgb(15, 26, 26);
     color: whitesmoke;
+    font-family: 'Playfair Display', serif;
     padding: 0px 30px 0px 0px;
-    font-size: 19px;
+    font-size: 22px;
     line-height:55px;
     border: none;
   }
@@ -43,6 +44,7 @@ nav {
   /* Links inside the dropdown */
   .dropdown-content a {
     color: whitesmoke;
+    font-family: 'Playfair Display', serif;
     padding: 5px;
     text-decoration: none;
     display: block;
@@ -55,4 +57,4 @@ nav {
   .dropdown:hover .dropdown-content {display: block;}
   
   /* Change the background color of the dropdown button when the dropdown content is shown */
-  .dropdown:hover .dropbtn {background-color: #1d302b;}
+  .dropdown:hover .dropbtn {background-color: rgb(15, 26, 26);}

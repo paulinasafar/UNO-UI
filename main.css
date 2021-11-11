@@ -17,9 +17,10 @@ body {
     background-size: 100% auto;
   }
 
+div#button {
+  display:flex;
+  justify-content: center;
+  width: 20%;
+}
 
-  div.players-and-cards {
-    display:flex;
-    justify-content: space-evenly;
-    flex-flow: row wrap;
-  }
+  
