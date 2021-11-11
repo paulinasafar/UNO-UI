@@ -7,8 +7,8 @@ const closeButton = document.getElementById('closeButton');
 const inputValues = document.getElementsByClassName('form-control');
 
 // Listening for player names + checking if all 4 names are inputed
-document.getElementById('playerNamesForm').addEventListener('submit', function(e) {
-    e.preventDefault(); 
+document.getElementById('playerNamesForm').addEventListener('submit', function (e) {
+    e.preventDefault();
     if (compareNames()) {
         for (let i = 0; i < inputValues.length; ++i) {
             let playerName = inputValues[i].value;
@@ -50,6 +50,13 @@ function compareNames() {
 document.getElementById('playerNamesForm').addEventListener('keyup', compareNames);
 
 let gameID;
+let nextPlayer;
+let player1;
+let player2;
+let player3;
+let player4;
+let topCard;
+let allPlayers;
 
 async function startGame() {
     let response = await fetch("http://nowaunoweb.azurewebsites.net/api/Game/Start", {
@@ -62,9 +69,40 @@ async function startGame() {
     if (response.ok) {
         let result = await response.json();
         console.log(result);
-        gameID = result.id;
+        gameID = result.Id;
+        nextPlayer = result.NextPlayer;
+        allPlayers = result.Players;
+        player1 = result.Players[0];
+        player2 = result.Players[1];
+        player3 = result.Players[2];
+        player4 = result.Players[3];
+        topCard = result.TopCard;
     } else {
         alert("HTTP-Error: " + response.status);
     }
 }
+
+let playersAndCards = document.getElementById("players-and-cards").children;
+console.log(playersAndCards);
+playersAndCards = Array.from(playersAndCards);
+console.log(playersAndCards);
+const player1Position = document.getElementById("player1");
+console.log(player1Position);
+
+
+function placePlayer() {
+    allPlayers.forEach(element => {
+        
+        
+
+        
+    });
+    
+
+    
+}
+
+
+
+
 
