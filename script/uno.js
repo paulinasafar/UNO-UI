@@ -1,6 +1,6 @@
 //Modal dialogue box
-const myModal = new bootstrap.Modal(document.getElementById("playerNames"));
-myModal.show();
+// const myModal = new bootstrap.Modal(document.getElementById("playerNames"));
+// myModal.show();
 
 const playerNames = [];
 const closeButton = document.getElementById('closeButton');
