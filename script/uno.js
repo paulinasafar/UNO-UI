@@ -101,15 +101,18 @@ function placePlayersAndCards(players) {
     players[1].Cards.forEach(element => {
         document.querySelector("#player2-allCards").appendChild(createCards(element));
     });
-    document.getElementById("player2-allCards").innerHTML = players[1].Cards;
 
     document.getElementById("player3-name").innerHTML = players[2].Player;
     document.getElementById("player3-points").innerHTML = players[2].Score;
-    document.getElementById("player3-allCards").innerHTML = players[2].Cards;
+    players[2].Cards.forEach(element => {
+        document.querySelector("#player3-allCards").appendChild(createCards(element));
+    });
 
     document.getElementById("player4-name").innerHTML = players[3].Player;
     document.getElementById("player4-points").innerHTML = players[3].Score;
-    document.getElementById("player4-allCards").innerHTML = players[3].Cards;
+    players[3].Cards.forEach(element => {
+        document.querySelector("#player4-allCards").appendChild(createCards(element));
+    });
 }
 
 const baseUrl = "http://nowaunoweb.azurewebsites.net/Content/Cards/";
