@@ -57,12 +57,13 @@
 
     /********************* CARDS BOXES ***************************************/
   
-    div.onlycards {      
+    div.onlycards{      
         display: flex;
         width:100%;
+        list-style: none;
     }
     
-    div#player1-cards.playercards {
+    div#player1-allCards{
         border: 2px solid red;
         width: 100%;
         height: 280px;
