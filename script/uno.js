@@ -11,6 +11,7 @@ let gameID;
 let nextPlayer;
 let topCard;
 let allPlayers;
+let playerCards = [];
 
 // Listening for player names + checking if all 4 names are inputed
 // document.getElementById('playerNamesForm').addEventListener('submit', function (e) {
@@ -91,10 +92,15 @@ function placePlayersAndCards(players) {
 
     document.getElementById("player1-name").innerHTML = players[0].Player;
     document.getElementById("player1-points").innerHTML = players[0].Score;
-    document.querySelector("#player1-allCards ul").append(getCards(players[0].Player));
+    players[0].Cards.forEach(element => {
+        document.querySelector("#player1-allCards").appendChild(createCards(element));
+    });
 
     document.getElementById("player2-name").innerHTML = players[1].Player;
     document.getElementById("player2-points").innerHTML = players[1].Score;
+    players[1].Cards.forEach(element => {
+        document.querySelector("#player2-allCards").appendChild(createCards(element));
+    });
     document.getElementById("player2-allCards").innerHTML = players[1].Cards;
 
     document.getElementById("player3-name").innerHTML = players[2].Player;
@@ -109,12 +115,12 @@ function placePlayersAndCards(players) {
 const baseUrl = "http://nowaunoweb.azurewebsites.net/Content/Cards/";
 
 function createCards(card) {
-    const li = document.createElement("li");
     const img = document.createElement("img");
     const color = card.Color.slice(0, 1).toLowerCase();
     const value = card.Value;
     img.src = `${baseUrl}${color}${value}.png`;
-    return li;
+    console.log(img);
+    return img;
 }
 
 async function getCards(player) {
@@ -127,7 +133,12 @@ async function getCards(player) {
     if (response.ok) {
         let result = await response.json();
         console.log(result);
-        createCards(result.Cards);
+        result.Cards.forEach(element => {
+            let card = createCards(element);
+            playerCards.push(card);
+            console.log(element);
+        });
+
     } else {
         alert("HTTP-Error: " + response.status);
     }
