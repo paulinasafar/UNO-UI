@@ -1,3 +1,5 @@
+/********************************************************** MODAL NAMES BOX *******************************************************************/
+
 //Modal dialogue box
 // const myModal = new bootstrap.Modal(document.getElementById("playerNames"));
 // myModal.show();
@@ -55,11 +57,13 @@ let playerCards = [];
 // }
 // document.getElementById('playerNamesForm').addEventListener('keyup', compareNames);
 
+
+/********************************************************** STARTING THE GAME *****************************************************************/
 //When "New Game" button is clicked, new game starts
 document.getElementById("button-newgame").addEventListener("click", startGame);
 
 
-// Starting the Game - obtatining players, cards and score
+// Starting the Game - obtatining Players, Cards and Score
 async function startGame() {
     let response = await fetch("http://nowaunoweb.azurewebsites.net/api/Game/Start", {
         method: 'POST',
@@ -81,17 +85,14 @@ async function startGame() {
         alert("HTTP-Error: " + response.status);
     }
 }
-
 startGame();
 
 let playersAndCards = document.getElementById("players-and-cards").children;
 playersAndCards = Array.from(playersAndCards);
 const player1Position = document.getElementById("player1");
 
-
+//Setting up Players, dealing Cards and allocating Score to each Player
 function placePlayersAndCards(players) {
-
-
     document.getElementById("player1-name").innerHTML = players[0].Player;
     document.getElementById("player1-points").innerHTML = players[0].Score;
     players[0].Cards.forEach(element => {
@@ -119,6 +120,7 @@ function placePlayersAndCards(players) {
 
 const baseUrl = "http://nowaunoweb.azurewebsites.net/Content/Cards/";
 
+//Creating the Cards
 function createCards(card) {
     const img = document.createElement("img");
     const color = card.Color.slice(0, 1).toLowerCase();
@@ -128,6 +130,7 @@ function createCards(card) {
     return img;
 }
 
+//Getting Cards from API  --> to be used later
 async function getCards(player) {
     let response = await fetch("http://nowaunoweb.azurewebsites.net/api/Game/GetCards/" + gameID + "?playerName=" + player, {
         method: 'GET',
@@ -143,8 +146,8 @@ async function getCards(player) {
             playerCards.push(card);
             console.log(element);
         });
-
     } else {
         alert("HTTP-Error: " + response.status);
     }
 }
+
