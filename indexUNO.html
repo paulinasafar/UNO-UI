@@ -10,17 +10,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="main.css">
-    <link rel="stylesheet" href="navbar.css">
-    <link rel="stylesheet" href="modal.css">
-    <link rel="stylesheet" href="players.css">
+    <link rel="stylesheet" href="css\main.css">
+    <link rel="stylesheet" href="css\navbar.css">
+    <link rel="stylesheet" href="css\modal.css">
+    <link rel="stylesheet" href="css\players.css">
     <title>UNO Project</title>
 </head>
 
 
 <body>
 
-      <!-- NAVBAR AND MENUBAR -->
+    <!-------------------------------------------------------NAVBAR AND MENUBAR -------------------------------------------------------------->
     <nav class="navbar-dark">
         <img src="https://as2.ftcdn.net/v2/jpg/00/39/46/07/1000_F_39460774_7cLGySRT1v2KiH1hg8LlOqPaIWADbg5Y.jpg"
             alt="avatar" class="rounded-circle img-responsive" width="100px" height="80px" maxlength="20">
@@ -35,13 +35,13 @@
         </div>
     </nav>
 
-      <!-- NEW GAME BUTTON -->
+    <!-------------------------------------------------------NEW GAME BUTTON -------------------------------------------------------------->
     <div id="button">
         <button type="submit" id="button-newgame" class="pushable"><span class="front">New Game</span></button>
     </div>
 
 
-    <!-- MODAL -->
+     <!------------------------------------------------------- MODAL -------------------------------------------------------------->
     <div class="modal fade" id="playerNames" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <form id="playerNamesForm">
@@ -69,9 +69,9 @@
                 </div>
             </div>
         </form>
-    </div> 
+    </div>
 
-    <!-- PLAYERS & CARDS -->
+     <!------------------------------------------------------- PLAYERS & CARDS -------------------------------------------------------------->
     <div id="players-and-cards">
 
         <div id="player1" class="player">
@@ -81,8 +81,9 @@
                 <div id="player1-points" class="playerpoints"></div>
             </div>
             <div class="onlycards">
-                <ul id="player1-allCards"></ul>
+                <div id="player1-allCards"></div>
             </div>
+
         </div>
 
         <div id="pickup-deck" class="deck"><span id="pickup-deck-span">Pickup Deck</span></div>
@@ -94,7 +95,7 @@
                 <div id="player2-points" class="playerpoints"></div>
             </div>
             <div class="onlycards">
-                <ul id="player2-allCards"></ul>
+                <div id="player2-allCards"></div>
             </div>
         </div>
 
@@ -104,7 +105,7 @@
                 <div id="player3-points" class="playerpoints"></div>
             </div>
             <div class="onlycards">
-                <ul id="player3-allCards"></ul>
+                <div id="player3-allCards"></div>
             </div>
         </div>
 
@@ -116,7 +117,7 @@
                 <div id="player4-points" class="playerpoints"></div>
             </div>
             <div class="onlycards">
-                <ul id="player4-allCards"></ul>
+                <div id="player4-allCards"></div>
             </div>
         </div>
 
