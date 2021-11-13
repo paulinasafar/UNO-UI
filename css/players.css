@@ -1,13 +1,13 @@
 
   div#players-and-cards {
-      margin:20px;
+     margin:20px;
     display:flex;
     justify-content: space-evenly;
     flex-flow: row wrap;
     gap: 20px;   
       }
 
-      /********************* PLAYERS BOXES ********************************/
+      /********************* PLAYERS BOXES ***********************************************/
     div#player1.player {
         width:35%;
         height:300px;      
@@ -38,69 +38,152 @@
         justify-content: stretch;
     }
 
-    div#draw-deck.deck {
-        width:15%;
-        height:200px;
-        align-self:flex-end;
+    div#draw-deck {
+        display: flex;
+        justify-content: center;       
+        width:10%;
+        height:150px;
     }
 
-    div#discard-deck.deck {
-        width:15%;
-        height:200px;
+    div#discard-deck {
+        display: flex;
+        justify-content: center;
+        width:10%;
+        height:150px;
     }
 
-    /********************* CARDS BOXES ***************************************/
+    img.mybackcard:hover{
+        transform: scale(1.2,1.2);
+      }    
+
+    img.mytopcard:hover{
+        transform: scale(1.2,1.2);
+      }   
+
+
+    /********************* CARDS BOXES ***************************************************/
   
     div.onlycards {      
         display: flex;
-        width:100%;
+        justify-content: center;
+        width:90%;
+        transform: rotate(-10deg);  
+        margin:20px;
     }
 
-    
+    img.mycard:hover{
+        margin: 0px 0px 20px 0px;
+        transform: scale(1.1,1.1);
+      }    
+
     /********************* PLAYER NAMES AND POINTS BOXES ********************************/
     
-    div.namesandpoints {     
+    div.namesandpoints {  
+        font-family: 'Playfair Display', serif; 
+        width:15%;  
         display:flex;
         flex-flow: column;
         gap:10px;
+        font-size: 25px;      
     }
 
     div#player1-name.playername {
         width: 100%;
-        height: 100px;
+        height: 100px;       
+        color:whitesmoke;     
     }
 
     div#player2-name.playername {
         width: 100%;
-        height: 100px;
+        height: 100px; 
+        color:whitesmoke;
+        border-radius:15px; 
     }
 
     div#player3-name.playername {
         width: 100%;
         height: 100px;
+        color:whitesmoke;
+
+        border-radius:15px; 
     }
 
     div#player4-name.playername {
         width: 100%;
         height: 100px;
+        color:whitesmoke;
+        border-radius:15px; 
     }
       
     div#player1-points.playerpoints {       
         width: 100%;
         height: 100px;
+        color:whitesmoke;
+        border-radius:15px; 
     }
 
     div#player2-points.playerpoints {       
         width: 100%;
         height: 100px;
+        color:whitesmoke;
+        border-radius:15px; 
     }
 
     div#player3-points.playerpoints {       
         width: 100%;
         height: 100px;
+        color:whitesmoke;
+        border-radius:15px; 
     }
 
     div#player4-points.playerpoints {       
         width: 100%;
         height: 100px;
+        color:whitesmoke;
+        border-radius:15px; 
     }
+
+    div.active-player {
+        background-color: red;
+        /*box-shadow: 0 70px 40px -20px rgba(0, 0, 0, 0.2);    
+        transform: scale(1.2, 1.2);*/
+    }
+
+    /* .spread:hover .suitdiamonds {
+        -webkit-transform: rotate(-10deg);
+        -moz-transform: rotate(-10deg);
+        -o-transform: rotate(-10deg);
+        -ms-transform: rotate(-10deg);
+        transform: rotate(-10deg);
+      }
+       
+      .spread:hover .suithearts {
+        left: 30px;
+        top: 0px;
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+       
+      .spread:hover .suitclubs {
+        left: 60px;
+        top: 5px;
+        -webkit-transform: rotate(10deg);
+        -moz-transform: rotate(10deg);
+        -o-transform: rotate(10deg);
+        -ms-transform: rotate(10deg);
+        transform: rotate(10deg);
+      }
+       
+      .spread:hover .suitspades{
+        left: 80px;
+        top: 10px;
+        -webkit-transform: rotate(20deg);
+        -moz-transform: rotate(20deg);
+        -o-transform: rotate(20deg);
+        -ms-transform: rotate(20deg);
+        transform: rotate(20deg);
+      } */
+
