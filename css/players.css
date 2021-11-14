@@ -144,7 +144,8 @@
     }
 
     div.active-player {
-        background-color: red;
+        background-color: hsl(345deg 100% 47%);
+        opacity: 5;
         /*box-shadow: 0 70px 40px -20px rgba(0, 0, 0, 0.2);    
         transform: scale(1.2, 1.2);*/
     }

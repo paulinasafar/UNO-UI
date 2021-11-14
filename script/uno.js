@@ -7,9 +7,23 @@ const playerNamesHardCoded = ["Karo", "Mimi", "Steffi", "Lu"];
 const closeButton = document.getElementById('closeButton');
 const inputValues = document.getElementsByClassName('form-control');
 
-let gameID;
+
+let gameID = "";
 let topCard;
-let playerCards = [];
+let cardsPlayer1 = [];
+let cardsPlayer1_color = "";
+let cardsPlayer1_value = "";
+let cardsPlayer2 = [];
+let cardsPlayer2_color = "";
+let cardsPlayer2_value = "";
+let cardsPlayer3 = [];
+let cardsPlayer3_color = "";
+let cardsPlayer3_value = "";
+let cardsPlayer4 = [];
+let cardsPlayer4_color = "";
+let cardsPlayer4_value = "";
+let card;
+let wildCard;
 
 // Listening for player names + checking if all 4 names are inputed
 //-----------------------------------------------------------------
@@ -108,25 +122,49 @@ function placePlayersAndCards(players) {
     document.getElementById("player1-name").innerHTML = players[0].Player;
     document.getElementById("player1-points").innerHTML = players[0].Score;
     players[0].Cards.forEach(element => {
-        document.querySelector("#player1-allCards").appendChild(createCards(element)).classList.add("mycard");
+        card = createCards(element);
+        document.querySelector("#player1-allCards").appendChild(card).classList.add("mycard");
+        cardsPlayer1 = players[0].Cards.map(item => `${item.Color}${item.Value}`);
+        cardsPlayer1_color = players[0].Cards.map(item => `${item.Color}`);
+        cardsPlayer1_value = players[0].Cards.map(item => `${item.Value}`);
+        for (let color in cardsPlayer1_color) { card.color = color; }
+        for (let value in cardsPlayer1_value) { card.value = value; }
     });
 
     document.getElementById("player2-name").innerHTML = players[1].Player;
     document.getElementById("player2-points").innerHTML = players[1].Score;
     players[1].Cards.forEach(element => {
-        document.querySelector("#player2-allCards").appendChild(createCards(element)).classList.add("mycard");
+        card = createCards(element);
+        document.querySelector("#player2-allCards").appendChild(card).classList.add("mycard");
+        cardsPlayer2 = players[0].Cards.map(item => `${item.Color}${item.Value}`);
+        cardsPlayer2_color = players[0].Cards.map(item => `${item.Color}`);
+        cardsPlayer2_value = players[0].Cards.map(item => `${item.Value}`);
+        for (let color in cardsPlayer1_color) { card.dataset.color = color; }
+        for (let value in cardsPlayer1_value) { card.dataset.value = value; }
     });
 
     document.getElementById("player3-name").innerHTML = players[2].Player;
     document.getElementById("player3-points").innerHTML = players[2].Score;
     players[2].Cards.forEach(element => {
-        document.querySelector("#player3-allCards").appendChild(createCards(element)).classList.add("mycard");
+        card = createCards(element);
+        document.querySelector("#player3-allCards").appendChild(card).classList.add("mycard");
+        cardsPlayer3 = players[0].Cards.map(item => `${item.Color}${item.Value}`);
+        cardsPlayer3_color = players[0].Cards.map(item => `${item.Color}`);
+        cardsPlayer3_value = players[0].Cards.map(item => `${item.Value}`);
+        for (let color in cardsPlayer1_color) { card.dataset.color = color; }
+        for (let value in cardsPlayer1_value) { card.dataset.value = value; }
     });
 
     document.getElementById("player4-name").innerHTML = players[3].Player;
     document.getElementById("player4-points").innerHTML = players[3].Score;
     players[3].Cards.forEach(element => {
-        document.querySelector("#player4-allCards").appendChild(createCards(element)).classList.add("mycard");
+        card = createCards(element);
+        document.querySelector("#player4-allCards").appendChild(card).classList.add("mycard");
+        cardsPlayer4 = players[0].Cards.map(item => `${item.Color}${item.Value}`);
+        cardsPlayer4_color = players[0].Cards.map(item => `${item.Color}`);
+        cardsPlayer4_value = players[0].Cards.map(item => `${item.Value}`);
+        for (let color in cardsPlayer1_color) { card.dataset.color = color; }
+        for (let value in cardsPlayer1_value) { card.dataset.value = value; }
     });
 
     document.getElementById("discard-deck").appendChild(showTopCard(topCard)).classList.add("mytopcard");
@@ -135,11 +173,9 @@ function placePlayersAndCards(players) {
 
     showActivePlayer();
     getPlayersCards(players);
-    
-
 }
 
-function getPlayersCards(players) {            
+function getPlayersCards(players) {
     return players;
 }
 
@@ -165,7 +201,6 @@ function createCards(card) {
     } else if (value === 14) {
         img.src = `${baseUrlCards}wild.png`;
     }
-    //console.log(img);
     return img;
 }
 
@@ -188,7 +223,6 @@ function showTopCard(topCard) {
     } else if (value === 14) {
         img.src = `${baseUrlCards}wild.png`;
     }
-    //console.log(img);
     return img;
 }
 
@@ -197,7 +231,7 @@ function showTopCard(topCard) {
 function showCardBack() {
     const img = document.createElement("img");
     img.src = `${baseUrlBack}back.png`;
-    //console.log(img);
+
     return img;
 }
 
@@ -205,9 +239,7 @@ function showCardBack() {
 // async function getCards(player) {
 //     let response = await fetch("http://nowaunoweb.azurewebsites.net/api/Game/GetCards/" + gameID + "?playerName=" + player, {
 //         method: 'GET',
-//         headers: {
-//             'Content-type': 'application/json; charset=UTF-8',
-//         }
+//         headers: { 'Content-type': 'application/json; charset=UTF-8', }
 //     });
 //     if (response.ok) {
 //         let result = await response.json();
@@ -267,15 +299,24 @@ function showActivePlayer() {
 }
 
 
-/****************************************** PLAYERS PLAY ******************************************************************/
+/****************************************** PLAYERS PLAY CARD ******************************************************************/
 
-let cardIsChosen = document.getElementsByClassName("mycards");
+//Finding a card that Player wants to play
+//-----------------------------------------
+for (let i = 0; i < 4; i++) {
+    document.getElementsByClassName("onlycards")[i].addEventListener("click", function (event) {
+        event.target.id = "selected-card";
+        if (event.target.dataset.color === "Black") {
+            //chooseColorModal.show();
+        } else {
+            wildCard = "";
+            playCard(event.target.dataset.value, event.target.dataset.color, wildCard);
+        }
+    });
+}
 
-// let isClicked = document.getElementsByTagName('img').onclick = function() {
-//    return true;
-//  }​;​
-
- 
+//Playing the chosen Card
+//-----------------------
 async function playCard(value, color, wildCard) {
 
     let response = await fetch("http://nowaunoweb.azurewebsites.net/api/game/playCard/" + gameID + "?value=" + value + "&color=" + color + "&wildColor=" + wildCard, {
@@ -285,36 +326,63 @@ async function playCard(value, color, wildCard) {
     if (response.ok) {
         let result = await response.json();
         console.log(result);
+        responseForPlayCard(result);
         alert(JSON.stringify(result));
-        if (result.error == "WrongColor" || result.error == "IncorrectPlayer" || result.error == "Draw4NotAllowed") {
-            return false;
-        } else {
-            responseForPlayCard(result);
-            return true;
-        }
     } else {
         alert("HTTP-Error: " + response.status);
         return false;
     }
 }
 
-
 function responseForPlayCard(response) {
-    //removePlayedCardFromHand();
+    removePlayedCardFromHand();
     //removeOldTopCard();
     //placePlayedCardOnDiscardPile();
     //showUpdatedPlayersScore(); response.Score for player that played;
-    //moveToNextPlayer();
+    showTopCard();
 }
 
 async function removePlayedCardFromHand() {
-    //elementToRemove.remove();
+    let cardToRemove = document.getElementById("selected-card");
+    cardToRemove.remove();
 }
 
 async function removeOldTopCard() {
-    //element topCard.remove();
+    let topCardToRemove = document.getElementsByClassName("mytopcard")[0];
+    topCardToRemove.remove();    
 }
 
-async function placePlayedCardOnDiscardPile() {
-    //showTopCard(playedCard);
+
+
+/****************************************** DRAW CARD FROM DECK ******************************************************************/
+
+async function drawACardFromDeck() {
+    let response = await fetch("http://nowaunoweb.azurewebsites.net/api/Game/DrawCard/" + gameID, {
+        method: 'PUT',
+        headers: { 'Content-type': 'application/json; charset=UTF-8', }
+    });
+    if (response.ok) {
+        let result = await response.json();
+        let playerToReceiveCard = result.Player;
+
+        const url = `${baseUrl}${result.Card.Color}${result.Card.Value}.png`;
+        console.log("URL :" + url);
+
+        for (let i = 0; i < getAllPlayers().length; i++) {
+            if (getAllPlayers()[i] == playerToReceiveCard) {
+                let myElem = document.getElementById("hand-player" + (i + 1));
+                const img = document.createElement("img");
+                img.src = url;
+                img.dataset.value = result.Card.Value;
+                img.dataset.color = result.Card.Color;
+                myElem.appendChild(img);
+            }
+        }
+        nextPlayer = result.NextPlayer;
+        setActivePlayer();
+        return true;
+    } else {
+        alert("HTTP-Error: " + response.status);
+        return false;
+    }
 }
