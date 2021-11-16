@@ -1,11 +1,24 @@
 /********************************************************** MODAL NAMES BOX *******************************************************************/
 const myModal = new bootstrap.Modal(document.getElementById("playerNames"));
 myModal.show();
+//Modal dialogue box
+ const myModal = new bootstrap.Modal(document.getElementById("playerNames"));
+ myModal.show();
 
 const playerNames = [];
 const playerNamesHardCoded = ["Karo", "Mimi", "Steffi", "Lu"];
 const closeButton = document.getElementById('closeButton');
 const inputValues = document.getElementsByClassName('form-control');
+let gameID;
+let unoAPI = "http://nowaunoweb.azurewebsites.net/api/Game/Start";
+let cValue; // chosen value of the card
+let cColor;  //chosen color of the card
+let wildColor; //chosen wild card
+let value; //top card value
+let color; //top card color
+let topCard;
+let gamePlayers; //what initial Json returns
+
 
 
 let gameID = "";
@@ -44,6 +57,7 @@ document.getElementById('playerNamesForm').addEventListener('submit', function (
     }
 })
 
+console.log(String(playerNames));
 
 //Listening for players with same names
 //-------------------------------------
@@ -79,8 +93,9 @@ document.getElementById("button-newgame").addEventListener("click", function () 
 
 // Starting the Game - obtatining Players, Cards and Score
 //--------------------------------------------------------
+//Gives cards to players
 async function startGame() {
-    let response = await fetch("http://nowaunoweb.azurewebsites.net/api/Game/Start", {
+    let response = await fetch(unoAPI, {
         method: 'POST',
         body: JSON.stringify(playerNames),
         headers: {
@@ -97,9 +112,25 @@ async function startGame() {
         getNextPlayer(nextPlayer);
         getAllPlayers(allPlayers);
         placePlayersAndCards(allPlayers);
+        let startingJson = await response.json();
+        console.log(startingJson);
+        gameID = startingJson.id;
     } else {
         alert("HTTP-Error: " + response.status);
     }
+
+    topCard = startingJson.TopCard.Color + startingJson.TopCard.Value;
+    gamePlayers = gamestartJson.Players;
+    color = gamestartJson.TopCard.Color;
+    value = gamestartJson.TopCard.Value;
+    
+    //showClosedCards();
+    //showPickupDeck();
+    //showPutdownDeck();
+    //showPoints();
+    //showPlayerNames();
+    //decideNextPlayer();
+    //displayCurrentPlayer()
 }
 document.getElementById("closeButton").addEventListener('keyup', startGame);
 
