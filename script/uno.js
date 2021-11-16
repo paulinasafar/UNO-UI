@@ -77,7 +77,6 @@ document.getElementById("button-newgame").addEventListener("click", function () 
     location.reload();
 });
 
-
 // Starting the Game - obtatining Players, Cards and Score
 //--------------------------------------------------------
 async function startGame() {
@@ -310,7 +309,7 @@ for (let i = 0; i < 4; i++) {
             //chooseColorModal.show();
         } else {
             wildCard = "";
-            playCard(event.target.dataset.value, event.target.dataset.color, wildCard);
+            playCard(event.target.value, event.target.color, wildCard);
         }
     });
 }
@@ -318,7 +317,11 @@ for (let i = 0; i < 4; i++) {
 //Playing the chosen Card
 //-----------------------
 async function playCard(value, color, wildCard) {
-
+    let chosenCard = {
+        Color: color,
+        Value: value
+    };  
+  
     let response = await fetch("http://nowaunoweb.azurewebsites.net/api/game/playCard/" + gameID + "?value=" + value + "&color=" + color + "&wildColor=" + wildCard, {
         method: 'PUT',
         headers: { 'Content-type': 'application/json; charset=UTF-8', }
@@ -327,7 +330,7 @@ async function playCard(value, color, wildCard) {
         let result = await response.json();
         console.log(result);
         responseForPlayCard(result);
-        alert(JSON.stringify(result));
+        alert(JSON.stringify(result));            
     } else {
         alert("HTTP-Error: " + response.status);
         return false;
@@ -336,10 +339,12 @@ async function playCard(value, color, wildCard) {
 
 function responseForPlayCard(response) {
     removePlayedCardFromHand();
-    //removeOldTopCard();
-    //placePlayedCardOnDiscardPile();
-    //showUpdatedPlayersScore(); response.Score for player that played;
-    showTopCard();
+    removeOldTopCard();
+    showTopCard(chosenCard);  // NOT WORKING!!!
+
+    document.getElementById("player1-points").innerHTML = response.Score;
+    
+    showTopCard(chosenCard);
 }
 
 async function removePlayedCardFromHand() {
@@ -349,7 +354,7 @@ async function removePlayedCardFromHand() {
 
 async function removeOldTopCard() {
     let topCardToRemove = document.getElementsByClassName("mytopcard")[0];
-    topCardToRemove.remove();    
+    topCardToRemove.remove();
 }
 
 
