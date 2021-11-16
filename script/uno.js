@@ -1,26 +1,11 @@
 /********************************************************** MODAL NAMES BOX *******************************************************************/
-const myModal = new bootstrap.Modal(document.getElementById("playerNames"));
-myModal.show();
 //Modal dialogue box
  const myModal = new bootstrap.Modal(document.getElementById("playerNames"));
  myModal.show();
 
 const playerNames = [];
-const playerNamesHardCoded = ["Karo", "Mimi", "Steffi", "Lu"];
-const closeButton = document.getElementById('closeButton');
 const inputValues = document.getElementsByClassName('form-control');
-let gameID;
-let unoAPI = "http://nowaunoweb.azurewebsites.net/api/Game/Start";
-let cValue; // chosen value of the card
-let cColor;  //chosen color of the card
-let wildColor; //chosen wild card
-let value; //top card value
-let color; //top card color
-let topCard;
-let gamePlayers; //what initial Json returns
-
-
-
+let unoAPI = "http://nowaunoweb.azurewebsites.net/api/game/start";
 let gameID = "";
 let topCard;
 let cardsPlayer1 = [];
@@ -50,7 +35,7 @@ document.getElementById('playerNamesForm').addEventListener('submit', function (
                 playerName = "";
             }
         }
-        if (playerNamesHardCoded.length == 4) {
+        if (playerNames.length === 4) {
             myModal.hide();
             startGame();
         }
@@ -103,34 +88,19 @@ async function startGame() {
         }
     });
     if (response.ok) {
-        let result = await response.json();
-        console.log(result);
-        gameID = result.Id;
-        nextPlayer = result.NextPlayer;
-        allPlayers = result.Players;
-        topCard = result.TopCard;
-        getNextPlayer(nextPlayer);
-        getAllPlayers(allPlayers);
-        placePlayersAndCards(allPlayers);
         let startingJson = await response.json();
         console.log(startingJson);
         gameID = startingJson.id;
+        nextPlayer = startingJson.NextPlayer;
+        allPlayers = startingJson.Players;
+        topCard = startingJson.TopCard;
+        getNextPlayer(nextPlayer);
+        getAllPlayers(allPlayers);
+        placePlayersAndCards(allPlayers);
+    
     } else {
         alert("HTTP-Error: " + response.status);
     }
-
-    topCard = startingJson.TopCard.Color + startingJson.TopCard.Value;
-    gamePlayers = gamestartJson.Players;
-    color = gamestartJson.TopCard.Color;
-    value = gamestartJson.TopCard.Value;
-    
-    //showClosedCards();
-    //showPickupDeck();
-    //showPutdownDeck();
-    //showPoints();
-    //showPlayerNames();
-    //decideNextPlayer();
-    //displayCurrentPlayer()
 }
 document.getElementById("closeButton").addEventListener('keyup', startGame);
 
@@ -169,8 +139,8 @@ function placePlayersAndCards(players) {
         cardsPlayer2 = players[0].Cards.map(item => `${item.Color}${item.Value}`);
         cardsPlayer2_color = players[0].Cards.map(item => `${item.Color}`);
         cardsPlayer2_value = players[0].Cards.map(item => `${item.Value}`);
-        for (let color in cardsPlayer1_color) { card.dataset.color = color; }
-        for (let value in cardsPlayer1_value) { card.dataset.value = value; }
+        for (let color in cardsPlayer1_color) { card.color = color; }
+        for (let value in cardsPlayer1_value) { card.value = value; }
     });
 
     document.getElementById("player3-name").innerHTML = players[2].Player;
@@ -181,8 +151,8 @@ function placePlayersAndCards(players) {
         cardsPlayer3 = players[0].Cards.map(item => `${item.Color}${item.Value}`);
         cardsPlayer3_color = players[0].Cards.map(item => `${item.Color}`);
         cardsPlayer3_value = players[0].Cards.map(item => `${item.Value}`);
-        for (let color in cardsPlayer1_color) { card.dataset.color = color; }
-        for (let value in cardsPlayer1_value) { card.dataset.value = value; }
+        for (let color in cardsPlayer1_color) { card.color = color; }
+        for (let value in cardsPlayer1_value) { card.value = value; }
     });
 
     document.getElementById("player4-name").innerHTML = players[3].Player;
@@ -193,8 +163,8 @@ function placePlayersAndCards(players) {
         cardsPlayer4 = players[0].Cards.map(item => `${item.Color}${item.Value}`);
         cardsPlayer4_color = players[0].Cards.map(item => `${item.Color}`);
         cardsPlayer4_value = players[0].Cards.map(item => `${item.Value}`);
-        for (let color in cardsPlayer1_color) { card.dataset.color = color; }
-        for (let value in cardsPlayer1_value) { card.dataset.value = value; }
+        for (let color in cardsPlayer1_color) { card.color = color; }
+        for (let value in cardsPlayer1_value) { card.value = value; }
     });
 
     document.getElementById("discard-deck").appendChild(showTopCard(topCard)).classList.add("mytopcard");
@@ -340,7 +310,7 @@ for (let i = 0; i < 4; i++) {
             //chooseColorModal.show();
         } else {
             wildCard = "";
-            playCard(event.target.value, event.target.color, wildCard);
+            playCard(event.value, event.color, wildCard);
         }
     });
 }
