@@ -8,6 +8,7 @@ const inputValues = document.getElementsByClassName('form-control');
 let unoAPI = "http://nowaunoweb.azurewebsites.net/api/game/start";
 let gameID;
 let topCard;
+let allPlayers = [];
 let cardsPlayer1 = [];
 let cardsPlayer1_color = "";
 let cardsPlayer1_value = "";
@@ -93,6 +94,7 @@ async function startGame() {
         gameID = startingJson.Id;
         nextPlayer = startingJson.NextPlayer;
         allPlayers = startingJson.Players;
+        console.log(allPlayers);
         topCard = startingJson.TopCard;
         getNextPlayer(nextPlayer);
         getAllPlayers(allPlayers);
@@ -287,8 +289,6 @@ function showActivePlayer() {
 
 //Finding a card that Player wants to play
 //-----------------------------------------
-
-
 function playSelectedCard() {
     console.log(document.getElementById("player" + nextPlayer + "-allCards"));
 
@@ -305,21 +305,17 @@ function playSelectedCard() {
     });
 }
 
+
 //Playing the chosen Card
 //-----------------------
 async function playCard(value, color, wildCard) {
-    let chosenCard = {
-        Color: color,
-        Value: value
-    };
-
+  
     let response = await fetch("http://nowaunoweb.azurewebsites.net/api/game/playCard/" + gameID + "?value=" + value + "&color=" + color + "&wildColor=" + wildCard, {
         method: 'PUT',
         headers: { 'Content-type': 'application/json; charset=UTF-8', }
     });
     if (response.ok) {
         let result = await response.json();
-        // console.log(result);
         responseForPlayCard(result);
 
     } else {
@@ -351,7 +347,7 @@ async function removeOldTopCard() {
 
 
 /****************************************** DRAW CARD FROM DECK ******************************************************************/
-
+//Player gets drawn card
 async function drawACardFromDeck() {
     let response = await fetch("http://nowaunoweb.azurewebsites.net/api/Game/DrawCard/" + gameID, {
         method: 'PUT',
@@ -373,9 +369,10 @@ async function drawACardFromDeck() {
         alert("HTTP-Error: " + response.status);
         return false;
     }
-
 }
 
-document.getElementById("draw-deck").addEventListener("click", function () {
-   drawACardFromDeck();
+//Player draws a card
+document.getElementById("draw-deck").addEventListener("click", function() {
+    drawACardFromDeck();
+
 })
