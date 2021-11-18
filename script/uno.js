@@ -7,6 +7,7 @@ const playerNamesHardCoded = ["Karo", "Mimi", "Steffi", "Lu"];
 const closeButton = document.getElementById('closeButton');
 const inputValues = document.getElementsByClassName('form-control');
 
+
 let gameID;
 let nextPlayer;
 let topCard;
@@ -73,7 +74,10 @@ async function startGame() {
         nextPlayer = result.NextPlayer;
         allPlayers = result.Players;
         topCard = result.TopCard;
+
         placePlayersAndCards(allPlayers);
+        document.getElementById("putdown-deck").appendChild(createCards(topCard));
+        document.getElementById("pickup-deck").appendChild(createCardCover());
 
     } else {
         alert("HTTP-Error: " + response.status);
@@ -86,10 +90,7 @@ let playersAndCards = document.getElementById("players-and-cards").children;
 playersAndCards = Array.from(playersAndCards);
 const player1Position = document.getElementById("player1");
 
-
 function placePlayersAndCards(players) {
-
-
     document.getElementById("player1-name").innerHTML = players[0].Player;
     document.getElementById("player1-points").innerHTML = players[0].Score;
     players[0].Cards.forEach(element => {
@@ -116,15 +117,47 @@ function placePlayersAndCards(players) {
 }
 
 const baseUrl = "http://nowaunoweb.azurewebsites.net/Content/Cards/";
+const baseUrlCover = "http://nowaunoweb.azurewebsites.net/Content/";
 
 function createCards(card) {
     const img = document.createElement("img");
-    const color = card.Color.slice(0, 1).toLowerCase();
-    const value = card.Value;
-    img.src = `${baseUrl}${color}${value}.png`;
-    console.log(img);
+    const color = card.Color;
+    let value = card.Value;
+    if (value > 9) {
+        switch (value) {
+            case 10:
+                value = "d2";
+                break;
+            case 11:
+                value = "r";
+                break;
+            case 12:
+                value = "s";
+                break;
+            case 13:
+                value = "wd4";
+                break;
+            case 14:
+                value = "wild";
+                break;
+        }
+    }
+    if (color != "Black") {
+        img.src = `${baseUrl}${color.slice(0, 1).toLowerCase()}${value}.png`;
+    } else {
+        img.src = `${baseUrl}${value}.png`;
+    }
+    // downloadImage(img.src);
+    // console.log(img);
     return img;
 }
+
+    function createCardCover() {
+        const img = document.createElement("img");
+        img.src = img.src = `${baseUrlCover}back.png`;
+        return img;
+    }
+    
 
 async function getCards(player) {
     let response = await fetch("http://nowaunoweb.azurewebsites.net/api/Game/GetCards/" + gameID + "?playerName=" + player, {
@@ -145,4 +178,20 @@ async function getCards(player) {
     } else {
         alert("HTTP-Error: " + response.status);
     }
+}
+
+
+async function downloadImage(imageSrc) {
+    const image = await fetch(imageSrc, {
+        mode: "no-cors"
+    });
+    const imageBlog = await image.blob()
+    const imageURL = URL.createObjectURL(imageBlog)
+
+    const link = document.createElement('a')
+    link.href = imageURL
+    link.download = 'image file name here'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
 }
