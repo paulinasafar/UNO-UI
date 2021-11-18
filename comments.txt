@@ -1,0 +1,13 @@
+    showClosedCards();  -> NOT DONE
+    showDrawDeck();  -> DONE
+    showDiscardDeck();  -> DONE
+    showPlayerNames();  -> DONE
+    showPoints();  -> DONE
+    showActivePlayer(); -> DONE
+    newGameButtonWorks(); -> DONE 
+    playCard();  -> NOT DONE
+    directionOfPlay(); -> NOT DONE
+    
+
+
+    https://www.unorules.com/  -> DONE

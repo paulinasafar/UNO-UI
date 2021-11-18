@@ -21,6 +21,7 @@ div#button {
   display:flex;
   justify-content: center;
   width: 100%;
+  font-size: 20px;
 }
 
 .pushable {
@@ -45,4 +46,3 @@ div#button {
   transform: translateY(-2px);
 }
 
-  

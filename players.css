@@ -10,8 +10,7 @@
       /********************* PLAYERS BOXES ********************************/
     div#player1.player {
         width:35%;
-        height:300px;
-        border:5px solid red;
+        height:300px;      
         display:flex;
         flex-direction:row;
         margin: 1px 3px 1px 3px;
@@ -19,8 +18,7 @@
 
     div#player2.player {
         width:35%;
-        height:300px;
-        border:5px solid red;
+        height:300px;      
         display:flex;
         flex-direction:row-reverse;
     }
@@ -28,7 +26,6 @@
     div#player3.player {
         width:35%;
         height:300px;
-        border:5px solid red;
         display:flex;
         flex-direction:row;
     }
@@ -36,7 +33,6 @@
     div#player4.player {
         width:35%;
         height:300px;
-        border:5px solid red;
         display:flex;
         flex-direction:row-reverse;
         justify-content: stretch;
@@ -45,14 +41,12 @@
     div#pickup-deck.deck {
         width:15%;
         height:200px;
-        border:5px solid red;
         align-self:flex-end;
     }
 
     div#putdown-deck.deck {
         width:15%;
         height:200px;
-        border:5px solid red;
     }
 
     /********************* CARDS BOXES ***************************************/
@@ -62,32 +56,8 @@
         width:100%;
         list-style: none;
     }
+
     
-    div#player1-allCards{
-        border: 2px solid red;
-        width: 100%;
-        height: 280px;
-    }
-
-    div#player2-cards.playercards {
-        border: 2px solid red;
-        width: 100%;
-        height: 280px;
-    }
-
-    div#player3-cards.playercards {
-        border: 2px solid red;
-        width: 100%;
-        height: 280px;
-    }
-
-    div#player4-cards.playercards {
-        border: 2px solid red;
-        width: 100%;
-        height: 280px;
-    }
-    
-
     /********************* PLAYER NAMES AND POINTS BOXES ********************************/
     
     div.namesandpoints {     
@@ -96,50 +66,42 @@
         gap:10px;
     }
 
-        div#player1-name.playername {
-        border: 2px solid red;
+    div#player1-name.playername {
         width: 100%;
         height: 100px;
     }
 
     div#player2-name.playername {
-        border: 2px solid red;
         width: 100%;
         height: 100px;
     }
 
     div#player3-name.playername {
-        border: 2px solid red;
         width: 100%;
         height: 100px;
     }
 
     div#player4-name.playername {
-        border: 2px solid red;
         width: 100%;
         height: 100px;
     }
       
     div#player1-points.playerpoints {       
-        border: 2px solid red;
         width: 100%;
         height: 100px;
     }
 
     div#player2-points.playerpoints {       
-        border: 2px solid red;
         width: 100%;
         height: 100px;
     }
 
     div#player3-points.playerpoints {       
-        border: 2px solid red;
         width: 100%;
         height: 100px;
     }
 
     div#player4-points.playerpoints {       
-        border: 2px solid red;
         width: 100%;
         height: 100px;
     }
