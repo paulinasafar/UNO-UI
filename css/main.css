@@ -1,24 +1,24 @@
 body {
-    font-family: 'Playfair Display', serif;    
-  }
-  
-  body::after {
-    content: "";
-    background: url('wallpaper.jpg');
-    /* url(https://img-public.freepik.com/preview/free-photo/creative-background-gaming-dice-cards-casino-chips-dark-background_99433-56.jpg); */
-    opacity: 0.5;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    z-index: -1;   
-    background-repeat: no-repeat;
-    background-size: 100% auto;
-  }
+  font-family: 'Playfair Display', serif;
+}
+
+body::after {
+  content: "";
+  background: url('wallpaper.jpg');
+  /* url(https://img-public.freepik.com/preview/free-photo/creative-background-gaming-dice-cards-casino-chips-dark-background_99433-56.jpg); */
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
 
 div#button {
-  display:flex;
+  display: flex;
   justify-content: center;
   width: 100%;
   font-size: 20px;
@@ -32,6 +32,7 @@ div#button {
   cursor: pointer;
   outline-offset: 4px;
 }
+
 .front {
   display: block;
   padding: 12px 42px;
@@ -45,4 +46,3 @@ div#button {
 .pushable:active .front {
   transform: translateY(-2px);
 }
-

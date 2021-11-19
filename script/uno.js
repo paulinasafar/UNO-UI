@@ -123,45 +123,63 @@ let discard = [topCard];
 //Setting up Players, dealing Cards and allocating Score to each Player
 //--------------------------------------------------------
 function placePlayersAndCards(players) {
-
     document.getElementById("player1-name").innerHTML = players[0].Player;
     document.getElementById("player1-points").innerHTML = players[0].Score;
     players[0].Cards.forEach(element => {
+        let cardColor = element.Color;
+        let cardValue = element.Value;
         card = createCards(element);
+        card.dataset.color = cardColor;
+        card.dataset.value = cardValue;
         document.querySelector("#player1-allCards").appendChild(card).classList.add("mycard");
-        cardsPlayer1 = players[0].Cards.map(item => `${item.Color}${item.Value}`);
     });
 
     document.getElementById("player2-name").innerHTML = players[1].Player;
     document.getElementById("player2-points").innerHTML = players[1].Score;
     players[1].Cards.forEach(element => {
+        let cardColor = element.Color;
+        let cardValue = element.Value;
         card = createCards(element);
+        card.dataset.color = cardColor;
+        card.dataset.value = cardValue;
         document.querySelector("#player2-allCards").appendChild(card).classList.add("mycard");
-        cardsPlayer2 = players[1].Cards.map(item => `${item.Color}${item.Value}`);
     });
 
     document.getElementById("player3-name").innerHTML = players[2].Player;
     document.getElementById("player3-points").innerHTML = players[2].Score;
     players[2].Cards.forEach(element => {
+        let cardColor = element.Color;
+        let cardValue = element.Value;
         card = createCards(element);
-        console.log(card);
+        card.dataset.color = cardColor;
+        card.dataset.value = cardValue;
         document.querySelector("#player3-allCards").appendChild(card).classList.add("mycard");
+
     });
 
     document.getElementById("player4-name").innerHTML = players[3].Player;
     document.getElementById("player4-points").innerHTML = players[3].Score;
+    players[3].Cards.forEach(element => {
+        let cardColor = element.Color;
+        let cardValue = element.Value;
+        card = createCards(element);
+        card.dataset.color = cardColor;
+        card.dataset.value = cardValue;
+        document.querySelector("#player4-allCards").appendChild(card).classList.add("mycard");
+    });
+
     // console.log(getCards(players[3].Player));
-    getCards(players[3].Player);
-    console.log(playersCards[0]);
-    
+    // getCards(players[3].Player);
+    // console.log(playersCards[0]);
 
-    for (let index = 0; index < playersCards.length; index++) {
-        
-        document.querySelector("#player4-allCards").appendChild(playersCards[index]).classList.add("mycard");
 
-        
-    }
-    
+    // for (let index = 0; index < playersCards.length; index++) {
+
+    //     document.querySelector("#player4-allCards").appendChild(playersCards[index]).classList.add("mycard");
+
+
+    // }
+
     // for (let key in playersCards) {
     //     console.log("Hello Paulina");
     //     document.querySelector("#player4-allCards").appendChild(key).classList.add("mycard");        
@@ -171,7 +189,7 @@ function placePlayersAndCards(players) {
     //     document.querySelector("#player4-allCards").appendChild(element).classList.add("mycard");
     //     console.log(document.querySelector("#player4-allCards").appendChild(element).classList.add("mycard"));
     // });
-    
+
 
     // players[3].Cards.forEach(element => {
     //     card = createCards(element);
@@ -211,32 +229,29 @@ function showCardBack() {
     return img;
 }
 
-
-
-
 // //Getting Cards from API  --> to be used later
-async function getCards(player) {
-    console.log("test");
-    let response = await fetch("http://nowaunoweb.azurewebsites.net/api/Game/GetCards/" + gameID + "?playerName=" + player, {
-        method: 'GET',
-        headers: { 'Content-type': 'application/json; charset=UTF-8' }
-    });
-    if (response.ok) {
-        console.log(response);
-        const result = await response.json();
-        console.log(result);
-        result.Cards.forEach(element => {
-            console.log(element);
-            let card = createCards(element);
-            console.log(card);
-            playersCards.push(card);  
-        });
-        console.log(playersCards[0]);
-        return playersCards
-    } else {
-        alert("HTTP-Error: " + response.status);
-    }   
-}
+// async function getCards(player) {
+//     console.log("test");
+//     let response = await fetch("http://nowaunoweb.azurewebsites.net/api/Game/GetCards/" + gameID + "?playerName=" + player, {
+//         method: 'GET',
+//         headers: { 'Content-type': 'application/json; charset=UTF-8' }
+//     });
+//     if (response.ok) {
+//         console.log(response);
+//         const result = await response.json();
+//         console.log(result);
+//         result.Cards.forEach(element => {
+//             console.log(element);
+//             let card = createCards(element);
+//             console.log(card);
+//             playersCards.push(card);
+//         });
+//         console.log(playersCards[0]);
+//         return playersCards
+//     } else {
+//         alert("HTTP-Error: " + response.status);
+//     }
+// }
 
 // // --> to be used later
 // async function getTopCardDiscardDeck() {
@@ -284,21 +299,18 @@ function showActivePlayer() {
 let onlyCards = document.getElementsByClassName("onlycards");
 for (let i = 0; i < 4; i++) {
     onlyCards[i].addEventListener("click", function (event) {
-        const imgSrcTextContent = event.target.attributes.src.textContent;
-        const color = imgSrcTextContent.slice(imgSrcTextContent.indexOf("/") + 1, (imgSrcTextContent.indexOf("_")));
-        const value = imgSrcTextContent.slice(imgSrcTextContent.indexOf("_") + 1, (imgSrcTextContent.indexOf(".")));
-        console.log(color + " " + value);
-
         if (event.target.parentElement.classList.contains("active-player")) {
             event.target.id = "selected-card";
-            if (color === "black") {
+
+            if (event.target.dataset.color === "Black") {
                 alert("Please choose a color!");
             } else {
                 wildCard = "";
-                playCard(value, color, wildCard);
+                console.log(event.target.dataset.color + " " + event.target.dataset.value);
+                playCard(event.target.dataset.value, event.target.dataset.color, wildCard);
             }
         } else {
-            alert("Wrong player!");
+            event.target.id = "wrong-player";
             // place to put wobble animation
         }
     });
@@ -316,7 +328,7 @@ async function playCard(value, color, wildCard) {
     if (response.ok) {
         let result = await response.json();
         console.log(response);
-        if(result.error === "WrongColor" || result.error === "Draw4NotAllowed" ) {
+        if (result.error === "WrongColor" || result.error === "Draw4NotAllowed") {
             alert("Please play another card, this one is not allowed!");
         } else {
             console.log(result);
@@ -359,13 +371,20 @@ async function drawACardFromDeck() {
     });
     if (response.ok) {
         let result = await response.json();
-        console.log(result);
-        let playerToReceiveCard = result.Player;
-        const url = `${cardBaseURL}_${result.Card.Color}${result.Card.Value}.png`;
-        console.log("URL :" + url);
-
+        let dealtCard = result.Card;
         nextPlayer = result.NextPlayer;
+        //let cardUrl = `${baseUrlCards}${result.Card.Color}${result.Card.Value}.png`;
+        let playerToReceiveCard = result.Player;
+
+        for (let i = 0; i < 4; i++) {
+            if (allPlayers[i].Player === nextPlayer) {
+                document.getElementById("player" + playerToReceiveCard + "-allCards").appendChild(createCards(dealtCard)).classList.add("mycard");
+            }
+        }
+
+
         showActivePlayer();
+        console.log(result);
         return true;
     } else {
         alert("HTTP-Error: " + response.status);
@@ -374,7 +393,8 @@ async function drawACardFromDeck() {
 }
 
 //Player draws a card
+//---------------------
 document.getElementById("draw-deck").addEventListener("click", function () {
     drawACardFromDeck();
-
+    showActivePlayer();
 })
