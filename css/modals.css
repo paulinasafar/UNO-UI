@@ -1,0 +1,108 @@
+/* ----------------------------------------------
+ * General
+ * ---------------------------------------------- */
+
+.modal-body {
+    text-align: center;
+}
+
+
+/* ----------------------------------------------
+ * Modal for names
+ * ---------------------------------------------- */
+
+input.form-control {
+    margin: 0px 5px 10px 5px;
+    border: 1px solid #1d3030;
+}
+
+div.modal-content {
+    background-color: #808080;
+    border-radius: 25px;
+}
+
+button.btn.btn-primary {
+    background-color: #1d302b;
+}
+
+h5[id^='staticBackdropLabel'] {
+    text-align: justify;
+    font-weight: bold;
+}
+
+
+/* ----------------------------------------------
+ * Modal to choose color after wild card
+ * ---------------------------------------------- */
+
+div#content-modal-color {
+    background-color: #808080;
+    border-radius: 25px;
+}
+
+#color-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+button.red-button {
+    background-color: #cb3428;
+    border-radius: 25px;
+    width: 20%;
+    height: 40px;
+    font-weight: bold;
+}
+
+button.blue-button {
+    background-color: #49aee7;
+    border-radius: 25px;
+    width: 20%;
+    height: 40px;
+    font-weight: bold;
+}
+
+button.green-button {
+    background-color: #5ac110;
+    border-radius: 25px;
+    width: 20%;
+    height: 40px;
+    font-weight: bold;
+}
+
+button.yellow-button {
+    background-color: #dfdc24;
+    border-radius: 25px;
+    width: 20%;
+    height: 40px;
+    font-weight: bold;
+}
+
+
+/* ----------------------------------------------
+ * Modal for result
+ * ---------------------------------------------- */
+
+#staticBackdropLabel-result {
+    font-weight: 800;
+}
+
+.result-list {
+  
+}
+
+.test {
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+    width: max-content;
+    padding: 5px 8px;
+}
+
+@-webkit-keyframes glow {
+    from {
+        box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 3px #fff, 0 0 4px #fff, 0 0 5px #fff, 0 0 6px #fff, 0 0 7px #fff;
+    }
+    to {
+        box-shadow: 0 0 10px #fff, 0 0 30px #737373, 0 0 4px #737373, 0 0 5px #737373, 0 0 6px #737373, 0 0 7px #737373, 0 0 8px #737373;
+    }
+}
