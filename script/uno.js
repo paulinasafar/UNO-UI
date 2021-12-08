@@ -8,7 +8,7 @@ namesModal.show();
 const colorModal = new bootstrap.Modal(document.getElementById("choose-color"));
 
 const resultModal = new bootstrap.Modal(document.getElementById("result"));
-
+// resultModal.show();
 
 const playerNames = [];
 const inputValues = document.getElementsByClassName('form-control');
@@ -355,14 +355,27 @@ async function getCards(player) {
             currentPlayersHand.appendChild(img).classList.add("mycard");
         });
         getEachPlayersSection(player).pointsDiv.innerHTML = result.Score;
+        // Abfrage active-player
+        console.log(currentPlayersHand.classList);
+        console.log(currentPlayersHand.classList.value);
+        if (currentPlayersHand.classList.value === "active-player") {
+            console.log("inside" + currentPlayersHand.classList.value);
+            if (result.Cards.length === 1) {
+                document.getElementById("circle-dot").innerText = "UNO!";
+                console.log("UNO?");
+            }
+            if (result.Cards.length > 1) {
+                document.getElementById("circle-dot").innerText = "";
+                console.log("Not UNO");
+            }
+            if(result.Cards.length === 0){
+                fillResultModal();
+            }
+            
+        }
+        const test = document.getElementsByClassName("active-player");
         showActivePlayer();
-        if (result.Cards.length === 1) {
-            document.getElementById("circle-dot").innerText = "UNO!";
-        }
-        if(result.Cards.length === 0){
-            fillResultModal();
-        }
-        return true;
+        return true; // wird noch gebraucht?
     } else {
         alert("HTTP-Error: " + response.status);
     }
@@ -452,6 +465,9 @@ function appendTopCard(response) {
 
 
 function fillResultModal() {
-    // todo -> fill div's
+    document.getElementById("1st-place").innerHTML = 
+    document.getElementById("2nd-place").innerHTML = 
+    document.getElementById("3rd-place").innerHTML = 
+    document.getElementById("4th-place").innerHTML = 
     resultModal.show();
 }
