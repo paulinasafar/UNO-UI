@@ -15,6 +15,7 @@ const inputValues = document.getElementsByClassName('form-control');
 const unoAPI = "http://nowaunoweb.azurewebsites.net/api/game/start";
 const cardsLocal = "cards/";
 const playersSection = { nameDiv: HTMLElement, pointsDiv: HTMLElement, cardsDiv: HTMLElement };
+const playersPointsAndNames = [];
 let gameID;
 let topCard;
 let nextPlayer;
@@ -25,6 +26,7 @@ let lastWild;
 let colorModalEvent;
 let wobble;
 let currentPlayersHand = [];
+let unoDiv;
 
 // Listening for player names + checking if all 4 names are inputed
 //-----------------------------------------------------------------
@@ -187,15 +189,13 @@ function showActivePlayer() {
         let playersHandDiv = getEachPlayersSection(player).cardsDiv;
         if (player === nextPlayer) {
             playersHandDiv.classList.add("active-player");
-            // deletePreviousCards(playersHandDiv);
-            // getCards(player);
         } else {
             const playersHandLength = Array.from(playersHandDiv.children).length;
             playersHandDiv.classList.remove("active-player");
             deletePreviousCards(playersHandDiv);
             for (let i = 0; i < playersHandLength; i++) {
                 let img = showCardBack();
-                playersHandDiv.appendChild(img).classList.add("mycard");   
+                playersHandDiv.appendChild(img).classList.add("mycard");
             }
         }
     });
@@ -216,40 +216,6 @@ function getEachPlayersSection(player) {
     return playersSection;
 }
 
-// only needed for getCurrentPlayerForGetCards
-function check(index) {
-    if (index === 0) {
-        index = 3;
-    } else {
-        index--;
-    }
-    return index;
-}
-
-// not working with hiding cards (showing back card)
-function getCurrentPlayerForGetCards(result, value) {
-    let player;
-    let positionCurrentPlayer;
-    let positionNextPlayer;
-    if (value && result) {
-        player = result.Player;
-        positionNextPlayer = playerNames.indexOf(player);
-        positionCurrentPlayer = check(positionNextPlayer);
-        if (value === "10" || value === "13") {
-            let positionSkippedPlayer = check(positionCurrentPlayer);
-            getCards(playerNames[positionSkippedPlayer]);
-            getCards(playerNames[positionCurrentPlayer]);
-        } else {
-            getCards(playerNames[positionCurrentPlayer]);
-            console.log("Test");
-        }
-    } else {
-        player = result.Player;
-        positionCurrentPlayer = playerNames.indexOf(player);
-        getCards(playerNames[positionCurrentPlayer]);
-    }
-    // showActivePlayer();
-}
 
 /****************************************** PLAYERS PLAY CARD ******************************************************************/
 
@@ -286,6 +252,14 @@ function setWobble(element) {
     element.id = "wrong-player";
 }
 
+let wheelOfFortune = document.getElementById("wheel-end");
+document.getElementById("result-button").addEventListener("click", function () {
+    let img = document.createElement("img");
+    img.src = "https://gpatuwo.github.io/css-casino/assets/vectors/roulette-wheel.svg";
+    wheelOfFortune.appendChild(img);
+    document.getElementById("wheel-end").firstElementChild.id = "wheel";
+});
+
 //Playing the chosen Card
 //-----------------------
 async function playCard(value, color, wildCard) {
@@ -305,26 +279,23 @@ async function playCard(value, color, wildCard) {
             console.log(result);
             nextPlayer = result.Player;
             responseForPlayCard(result);
-            // getCurrentPlayerForGetCards(result, value);
+
             playerNames.forEach(element => {
                 getCards(element);
             });
-            // showActivePlayer();
-
         }
-
     } else {
         alert("HTTP-Error: " + response.status);
         return false;
     }
 }
 //Putting it on the Discard Deck 
-function responseForPlayCard(result) {
+function responseForPlayCard() {
     let chosenCardImg = document.getElementById("selected-card");
     chosenCardImg.remove();
     removeOldTopCard();
     getNewTopCard();
-    // showActivePlayer();
+    showActivePlayer();
 }
 
 async function removeOldTopCard() {
@@ -354,28 +325,28 @@ async function getCards(player) {
             let img = createCards(card);
             currentPlayersHand.appendChild(img).classList.add("mycard");
         });
-        getEachPlayersSection(player).pointsDiv.innerHTML = result.Score;
-        // Abfrage active-player
-        console.log(currentPlayersHand.classList);
-        console.log(currentPlayersHand.classList.value);
-        if (currentPlayersHand.classList.value === "active-player") {
-            console.log("inside" + currentPlayersHand.classList.value);
-            if (result.Cards.length === 1) {
-                document.getElementById("circle-dot").innerText = "UNO!";
-                console.log("UNO?");
+
+        let playersPointsDiv = getEachPlayersSection(player).pointsDiv;
+        playersPointsDiv.innerHTML = result.Score;
+
+        if (result.Cards.length === 1) {
+            if (playersPointsDiv.parentElement.children.length !== 3) {
+                unoDiv = document.createElement("div");
+                unoDiv.innerHTML = "UNO!";
+                playersPointsDiv.parentElement.appendChild(unoDiv);
             }
-            if (result.Cards.length > 1) {
-                document.getElementById("circle-dot").innerText = "";
-                console.log("Not UNO");
-            }
-            if(result.Cards.length === 0){
-                fillResultModal();
-            }
-            
         }
-        const test = document.getElementsByClassName("active-player");
+        if (result.Cards.length > 1) {
+            if (playersPointsDiv.parentElement.children.length === 3) {
+                playersPointsDiv.parentElement.lastChild.remove();
+            }
+        }
+        if (result.Cards.length === 0) {
+            playersPointsDiv.parentElement.lastChild.remove();
+            fillResultModal();
+        }
+
         showActivePlayer();
-        return true; // wird noch gebraucht?
     } else {
         alert("HTTP-Error: " + response.status);
     }
@@ -385,8 +356,8 @@ function deletePreviousCards(activePlayer) {
     while (activePlayer.firstChild) {
         activePlayer.removeChild(activePlayer.firstChild);
     }
-
 }
+
 
 /****************************************** DRAW CARD FROM DECK ******************************************************************/
 //Player gets drawn card
@@ -407,8 +378,6 @@ async function drawACardFromDeck() {
         playerNames.forEach(element => {
             getCards(element);
         });
-        // getCurrentPlayerForGetCards(result);
-        // showActivePlayer();
 
     } else {
         alert("HTTP-Error: " + response.status);
@@ -463,11 +432,17 @@ function appendTopCard(response) {
 }
 
 
-
 function fillResultModal() {
-    document.getElementById("1st-place").innerHTML = 
-    document.getElementById("2nd-place").innerHTML = 
-    document.getElementById("3rd-place").innerHTML = 
-    document.getElementById("4th-place").innerHTML = 
+    playerNames.forEach(element => {
+        let elements = getEachPlayersSection(element);
+        playersPointsAndNames.push({ name: elements.nameDiv.innerHTML, points: Number(elements.pointsDiv.innerHTML) })
+    });
+    playersPointsAndNames.sort((a, b) => a.points - b.points);
+
+    document.getElementById("winner").innerHTML = "Congratulations <strong>" + playersPointsAndNames[0].name + "</strong> - you're the winner!";
+    document.getElementById("1st-place").innerHTML = "<strong>1st place: Name: </strong>" + playersPointsAndNames[0].name + " - <strong>Points: </strong>" + playersPointsAndNames[0].points;
+    document.getElementById("2nd-place").innerHTML = "<strong>2nd place: Name: </strong>" + playersPointsAndNames[1].name + " - <strong>Points: </strong>" + playersPointsAndNames[1].points;
+    document.getElementById("3rd-place").innerHTML = "<strong>3rd place: Name: </strong>" + playersPointsAndNames[2].name + " - <strong>Points: </strong>" + playersPointsAndNames[2].points;
+    document.getElementById("4th-place").innerHTML = "<strong>4th place: Name: </strong>" + playersPointsAndNames[3].name + " - <strong>Points: </strong>" + playersPointsAndNames[3].points;
     resultModal.show();
 }
