@@ -6,7 +6,6 @@ body {
   body::after {
     content: "";
     background: url('wallpaper.jpg');
-    /* url(https://img-public.freepik.com/preview/free-photo/creative-background-gaming-dice-cards-casino-chips-dark-background_99433-56.jpg); */
     opacity: 0.5;
     top: 0;
     left: 0;

@@ -1,15 +1,18 @@
 'use strict';
 
-/********************************************************** MODAL BOXES *********************************************************************/
+/********************************************************************************************************************************************/
+/**************************************************** MODAL BOXES & GLOBAL VARIABLES ********************************************************/
+/********************************************************************************************************************************************/
+
 //Modal dialogue box
+//--------------------
 const namesModal = new bootstrap.Modal(document.getElementById("playerNames"));
 namesModal.show();
-
 const colorModal = new bootstrap.Modal(document.getElementById("choose-color"));
-
 const resultModal = new bootstrap.Modal(document.getElementById("result"));
-// resultModal.show();
 
+//Global variables
+//--------------------
 const playerNames = [];
 const inputValues = document.getElementsByClassName('form-control');
 const unoAPI = "http://nowaunoweb.azurewebsites.net/api/game/start";
@@ -71,7 +74,11 @@ function compareNames() {
 }
 document.getElementById('playerNamesForm').addEventListener('keyup', compareNames);
 
+
+/**********************************************************************************************************************************************/
 /********************************************************** STARTING THE GAME *****************************************************************/
+/**********************************************************************************************************************************************/
+
 
 //When "New Game" button is clicked, new game starts
 //---------------------------------------------------
@@ -81,7 +88,6 @@ document.getElementById("button-newgame").addEventListener("click", function () 
 
 // Starting the Game - obtatining Players, Cards and Score
 //--------------------------------------------------------
-//Gives cards to players
 async function startGame() {
     let response = await fetch(unoAPI, {
         method: 'POST',
@@ -107,7 +113,10 @@ async function startGame() {
 document.getElementById("closeButton").addEventListener('keyup', startGame);
 
 
+/*******************************************************************************************************************************************/
 /****************************************** SETTING PLAYERS, DECKS, HANDS ******************************************************************/
+/*******************************************************************************************************************************************/
+
 
 //Setting up Players, dealing Cards and allocating Score to each Player
 //--------------------------------------------------------
@@ -151,7 +160,6 @@ function placePlayersAndCards(players) {
 function getPlayersCards(players) {
     return players;
 }
-
 
 //Getting Cards for a Player's hand
 //---------------------------------
@@ -201,7 +209,8 @@ function showActivePlayer() {
     });
 }
 
-// get elements(div for name, points, cards) for wanted player
+// Get elements(div for name, points, cards) for wanted player
+//-----------------------------------------------------------------
 function getEachPlayersSection(player) {
     const playerIndex = playerNames.indexOf(player);
     let allPlayerDivs = document.getElementsByClassName("player");
@@ -217,7 +226,10 @@ function getEachPlayersSection(player) {
 }
 
 
-/****************************************** PLAYERS PLAY CARD ******************************************************************/
+/********************************************************************************************************************************************/
+/****************************************************** PLAYERS PLAY CARD *******************************************************************/
+/********************************************************************************************************************************************/
+
 
 //Finding a card that Player wants to play
 //-----------------------------------------
@@ -244,6 +256,7 @@ for (let i = 0; i < 4; i++) {
 }
 
 //When incorrect Player tries to play, the card wobbles
+//-------------------------------------------------------
 function setWobble(element) {
     let cardWobble = document.querySelector("#wrong-player");
     if (cardWobble) {
@@ -252,16 +265,18 @@ function setWobble(element) {
     element.id = "wrong-player";
 }
 
+//Animation for Game Over
+//----------------------------
 let wheelOfFortune = document.getElementById("wheel-end");
 document.getElementById("result-button").addEventListener("click", function () {
     let img = document.createElement("img");
-    img.src = "https://gpatuwo.github.io/css-casino/assets/vectors/roulette-wheel.svg";
+    img.src = "https://media3.giphy.com/media/nLYQKiKkn7nwzvf7Ru/giphy.gif?cid=ecf05e47dusvvhxty7kjz0n561fq2sc045wg1mig4shefwkk&rid=giphy.gif&ct=g";
     wheelOfFortune.appendChild(img);
     document.getElementById("wheel-end").firstElementChild.id = "wheel";
 });
 
 //Playing the chosen Card
-//-----------------------
+//--------------------------
 async function playCard(value, color, wildCard) {
 
     let response = await fetch("http://nowaunoweb.azurewebsites.net/api/game/playCard/" + gameID + "?value=" + value + "&color=" + color + "&wildColor=" + wildCard, {
@@ -289,7 +304,9 @@ async function playCard(value, color, wildCard) {
         return false;
     }
 }
-//Putting it on the Discard Deck 
+
+//Putting the Card on the Discard Deck
+//--------------------------------
 function responseForPlayCard() {
     let chosenCardImg = document.getElementById("selected-card");
     chosenCardImg.remove();
@@ -308,9 +325,12 @@ function removeSelectedCardAttribute() {
     removeSelectedCard.removeAttribute("id");
 }
 
-/********************************************** GET CARDS FOR PLAYER ******************************************************************/
+/********************************************************************************************************************************************/
+/************************************************** GET CARDS FOR PLAYER ********************************************************************/
+/********************************************************************************************************************************************/
 
 //Getting Cards from API  --> to be used later
+//---------------------------------------------
 async function getCards(player) {
 
     let response = await fetch("http://nowaunoweb.azurewebsites.net/api/Game/GetCards/" + gameID + "?playerName=" + player, {
@@ -332,6 +352,7 @@ async function getCards(player) {
         if (result.Cards.length === 1) {
             if (playersPointsDiv.parentElement.children.length !== 3) {
                 unoDiv = document.createElement("div");
+                unoDiv.id = "uno-div";
                 unoDiv.innerHTML = "UNO!";
                 playersPointsDiv.parentElement.appendChild(unoDiv);
             }
@@ -359,7 +380,11 @@ function deletePreviousCards(activePlayer) {
 }
 
 
-/****************************************** DRAW CARD FROM DECK ******************************************************************/
+/*******************************************************************************************************************************************/
+/**************************************************** DRAW CARD FROM DECK ******************************************************************/
+/*******************************************************************************************************************************************/
+
+
 //Player gets drawn card
 //-----------------------
 async function drawACardFromDeck() {
@@ -384,8 +409,8 @@ async function drawACardFromDeck() {
     }
 }
 
-//Player draws a card
-//---------------------
+//Animation for drawn Card
+//----------------------------
 document.getElementById("draw-deck").addEventListener("click", function (event) {
     setTurnAround(event.target);
     drawACardFromDeck();
@@ -398,8 +423,12 @@ function setTurnAround(element) {
     element.classList.add("draw-card");
 }
 
-/****************************************** SHOW TOP CARD ON DISCARD DECK ****************************************************************/
+/********************************************************************************************************************************************/
+/********************************************* SHOW TOP CARD ON DISCARD DECK ****************************************************************/
+/********************************************************************************************************************************************/
 
+//Update Top Card on the Discard Deck
+//-------------------------------------
 async function getNewTopCard() {
 
     let response = await fetch("http://nowaunoweb.azurewebsites.net/api/Game/TopCard/" + gameID,
@@ -432,6 +461,21 @@ function appendTopCard(response) {
 }
 
 
+/********************************************************************************************************************************************/
+/******************************************************* END OF THE GAME*********************************************************************/
+/********************************************************************************************************************************************/
+
+
+//Announcing the Winner of the Game
+//-------------------------------------
+function fillResultModal() {
+    document.getElementById("1st-place").innerHTML =
+        document.getElementById("2nd-place").innerHTML =
+        document.getElementById("3rd-place").innerHTML =
+        document.getElementById("4th-place").innerHTML =
+        resultModal.show();
+}
+
 function fillResultModal() {
     playerNames.forEach(element => {
         let elements = getEachPlayersSection(element);
@@ -446,3 +490,4 @@ function fillResultModal() {
     document.getElementById("4th-place").innerHTML = "<strong>4th place: Name: </strong>" + playersPointsAndNames[3].name + " - <strong>Points: </strong>" + playersPointsAndNames[3].points;
     resultModal.show();
 }
+

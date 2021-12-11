@@ -57,13 +57,14 @@ div#draw-deck {
   width: 10%;
   height: 150px;
   position: absolute;
+  z-index:1;
 }
 
 div#discard-deck {
   display: flex;
   justify-content: center;
   flex-direction: column-reverse;
-  width: 5%;
+  width: 7%;
   height: 300px;
   margin-right: 50px;
 }
@@ -117,7 +118,6 @@ img.mytopcard:hover {
 }
 
 @keyframes wrong-player {
-
   0%,
   100% {
     -webkit-transform: translateX(0%);
@@ -269,7 +269,7 @@ div.active-player>* {
   transform: scale(1.1);
 }
 
-@-webkit-keyframes glow {
+@keyframes glow {
   from {
     box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 3px #fff, 0 0 4px #fff, 0 0 5px #fff, 0 0 6px #fff, 0 0 7px #fff;
   }
@@ -278,44 +278,6 @@ div.active-player>* {
     box-shadow: 0 0 10px #fff, 0 0 30px #737373, 0 0 4px #737373, 0 0 5px #737373, 0 0 6px #737373, 0 0 7px #737373, 0 0 8px #737373;
   }
 }
-
-/* .spread:hover .suitdiamonds {
-        -webkit-transform: rotate(-10deg);
-        -moz-transform: rotate(-10deg);
-        -o-transform: rotate(-10deg);
-        -ms-transform: rotate(-10deg);
-        transform: rotate(-10deg);
-      }
-       
-      .spread:hover .suithearts {
-        left: 30px;
-        top: 0px;
-        -webkit-transform: rotate(0deg);
-        -moz-transform: rotate(0deg);
-        -o-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        transform: rotate(0deg);
-      }
-       
-      .spread:hover .suitclubs {
-        left: 60px;
-        top: 5px;
-        -webkit-transform: rotate(10deg);
-        -moz-transform: rotate(10deg);
-        -o-transform: rotate(10deg);
-        -ms-transform: rotate(10deg);
-        transform: rotate(10deg);
-      }
-       
-      .spread:hover .suitspades{
-        left: 80px;
-        top: 10px;
-        -webkit-transform: rotate(20deg);
-        -moz-transform: rotate(20deg);
-        -o-transform: rotate(20deg);
-        -ms-transform: rotate(20deg);
-        transform: rotate(20deg);
-      } */
 
 /* ----------------------------------------------
  * Animation for Top Card on the Discard Deck

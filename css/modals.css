@@ -6,7 +6,6 @@
     text-align: center;
 }
 
-
 /* ----------------------------------------------
  * Modal for names
  * ---------------------------------------------- */
@@ -77,30 +76,31 @@ button.yellow-button {
     font-weight: bold;
 }
 
+/* ----------------------------------------------
+ * Big Win Animation
+ * ---------------------------------------------- */
+
 #wheel {
     z-index: 1;
     position: absolute;
-    top: 0px;
-    right: 250px;
-    width: 70%;
+    top:120px;
+    right:0px;
+    width: 100%;
+    height: 100%;
     cursor: pointer;
     box-shadow: none;
 }
-
 #wheel:hover {
-    animation: wheel 2s linear 0s infinite;
+    animation: wheel 4s linear 0s infinite;
 }
-
 #wheel:active {
     animation-play-state: paused;
 }
-
 @keyframes wheel {
     100% {
         transform: rotateZ(360deg);
     }
 }
-
 
 /* ----------------------------------------------
  * Modal for result
@@ -111,14 +111,13 @@ button.yellow-button {
 }
 
 .result-place {
-    -webkit-animation: glow 1s ease-in-out infinite alternate;
     -moz-animation: glow 1s ease-in-out infinite alternate;
     animation: glow 1s ease-in-out infinite alternate;
     padding: 5px 8px;
     color: #1d302b;
 }
 
-@-webkit-keyframes glow {
+@keyframes glow {
     from {
         box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 3px #fff, 0 0 4px #fff, 0 0 5px #fff, 0 0 6px #fff, 0 0 7px #fff;
     }
