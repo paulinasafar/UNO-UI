@@ -23,15 +23,26 @@ WEB-API mit Dokumentation
 
 * Everything that can go wrong, **WILL**. Repeatedly.
 * No matter how many resources you have, it is never enough.
-* It's so much better working in a team!
+* Teamwork rocks!
 * When confused/in doubt - **ASK**!
+* There is always one more bug.
 
+
+### UNO UI Challenges
+
+* Everything (Paulina)
+* Understanding Styrian accent (Paulina)
+* How do the Async functions work?
+* Sharing single GitHub repo
 
 
 ### UNO UI What we are proud at
 
 * Our motivation & interest
 * We learned so much!
-* 
+* Julia found a way to show only the cards of the active player!
 
 
+### UNO UI Question
+
+* CSS property (transform - scale) on Draw Deck does not work after animation is triggered
