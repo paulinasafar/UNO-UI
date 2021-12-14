@@ -31,6 +31,7 @@ WEB-API mit Dokumentation
 ### UNO UI What we are proud at
 
 * Our motivation & interest
+* We learned so much!
 * 
 
 
