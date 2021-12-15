@@ -41,6 +41,7 @@ WEB-API mit Dokumentation
 * Our motivation & interest
 * We learned so much!
 * Julia found a way to show only the cards of the active player!
+* Our team work!
 
 
 ### UNO UI Question
