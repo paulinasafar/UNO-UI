@@ -58,6 +58,7 @@ div#draw-deck {
     width: 10%;
     height: 150px;
     position: absolute;
+    z-index: 1;
 }
 
 div#discard-deck {
@@ -69,11 +70,16 @@ div#discard-deck {
     margin-right: 50px;
 }
 
-img.mybackcard:hover {
+img#deck-13:hover {
     transform: scale(1.2, 1.2);
 }
 
-img.mytopcard:hover {
+img.draw-card:hover {
+  margin: 0px 0px 20px 0px;
+    transform: scale(1.2, 1.2);
+}
+
+img#mytopcard:hover {
     transform: scale(1.2, 1.2);
 }
 
@@ -363,11 +369,11 @@ img.mytopcard {
  * w: http://animista.net, t: @cssanimista
  * ---------------------------------------------- */
 
-.testo {
+.playedCard {
 
   /* transition: left 1s ease-out, top 1s ease-out; */
-    -webkit-animation: rotate-scale-up 1s linear both;
-    animation: rotate-scale-up 1s linear both;
+    -webkit-animation: rotate-scale-up 0.5s linear both;
+    animation: rotate-scale-up 0.5s linear both;
     /* transition-delay: 3s; */
 }
 

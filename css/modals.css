@@ -77,31 +77,6 @@ button.yellow-button {
     font-weight: bold;
 }
 
-#wheel {
-    z-index: 1;
-    position: absolute;
-    top: 0px;
-    right: 250px;
-    width: 70%;
-    cursor: pointer;
-    box-shadow: none;
-}
-
-#wheel:hover {
-    animation: wheel 2s linear 0s infinite;
-}
-
-#wheel:active {
-    animation-play-state: paused;
-}
-
-@keyframes wheel {
-    100% {
-        transform: rotateZ(360deg);
-    }
-}
-
-
 /* ----------------------------------------------
  * Modal for result
  * ---------------------------------------------- */
@@ -125,5 +100,36 @@ button.yellow-button {
 
     to {
         box-shadow: 0 0 10px #fff, 0 0 30px #737373, 0 0 4px #737373, 0 0 5px #737373, 0 0 6px #737373, 0 0 7px #737373, 0 0 8px #737373;
+    }
+}
+
+/* ----------------------------------------------
+
+ * Big Win Animation
+
+ * ---------------------------------------------- */
+
+#wheel {
+    z-index: 1;
+    position: absolute;
+    top: 120px;
+    right: 0px;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+#wheel:hover {
+    animation: wheel 4s linear 0s infinite;
+}
+
+#wheel:active {
+    animation-play-state: paused;
+}
+
+@keyframes wheel {
+    100% {
+        transform: rotateZ(360deg);
     }
 }

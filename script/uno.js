@@ -8,7 +8,6 @@ namesModal.show();
 const colorModal = new bootstrap.Modal(document.getElementById("choose-color"));
 
 const resultModal = new bootstrap.Modal(document.getElementById("result"));
-// resultModal.show();
 
 const playerNames = [];
 const inputValues = document.getElementsByClassName('form-control');
@@ -92,11 +91,9 @@ async function startGame() {
     });
     if (response.ok) {
         let startingJson = await response.json();
-        console.log(startingJson);
         gameID = startingJson.Id;
         nextPlayer = startingJson.NextPlayer;
         allPlayers = startingJson.Players;
-        console.log(allPlayers);
         topCard = startingJson.TopCard;
         placePlayersAndCards(allPlayers);
 
@@ -180,7 +177,6 @@ function showCardBack() {
 let colorButtonClicked = document.getElementById("color-buttons");
 colorButtonClicked.addEventListener("click", function(event) {
     wildCard = event.target.id;
-    console.log(wildCard);
     playCard(colorModalEvent.dataset.value, colorModalEvent.dataset.color, wildCard);
 });
 
@@ -236,7 +232,6 @@ for (let i = 0; i < 4; i++) {
             } else {
                 wildCard = "";
                 playCard(event.target.dataset.value, event.target.dataset.color, wildCard);
-                console.log(event.target.parentElement);
             }
         } else {
             setWobble(event.target);
@@ -253,16 +248,6 @@ function setWobble(element) {
     element.id = "wrong-player";
 }
 
-//Animation for Game Over
-//----------------------------
-let wheelOfFortune = document.getElementById("wheel-end");
-document.getElementById("result-button").addEventListener("click", function() {
-    let img = document.createElement("img");
-    img.src = "https://media3.giphy.com/media/nLYQKiKkn7nwzvf7Ru/giphy.gif?cid=ecf05e47dusvvhxty7kjz0n561fq2sc045wg1mig4shefwkk&rid=giphy.gif&ct=g";
-    wheelOfFortune.appendChild(img);
-    document.getElementById("wheel-end").firstElementChild.id = "wheel";
-});
-
 //Playing the chosen Card
 //-----------------------
 async function playCard(value, color, wildCard) {
@@ -273,17 +258,13 @@ async function playCard(value, color, wildCard) {
     });
     if (response.ok) {
         let result = await response.json();
-        // await sleep(2000);
 
         if (result.error === "WrongColor" || result.error === "Draw4NotAllowed") {
-            console.log(result.error);
             removeSelectedCardAttribute();
             setWobble(wobble);
         } else {
-            console.log(result);
             nextPlayer = result.Player;
             responseForPlayCard();
-            // await sleep(2000);
             
             playerNames.forEach(element => {
                 getCards(element);
@@ -294,36 +275,19 @@ async function playCard(value, color, wildCard) {
         return false;
     }
 }
+
 //Putting it on the Discard Deck 
 async function responseForPlayCard() {
     let chosenCardImg = document.getElementById("selected-card");
-    chosenCardImg.classList.add("testo");
-    document.getElementById("discard-deck").appendChild(chosenCardImg);
-    await sleep(900);
+    document.getElementById("discard-deck").appendChild(chosenCardImg).classList.add("playedCard");
+    await timeoutForAnimation(500);
     removeOldTopCard();
-    chosenCardImg.remove();
-    
-    // let chosenCardImg = document.getElementById("selected-card");
-    
-    // document.getElementById("mytopcard").appendChild(chosenCardImg).classList.add("testo");
-    // await sleep(1000);
-    
-    // let xcCI = chosenCardImg.offsetLeft;
-    // let ycCI = chosenCardImg.offsetTop;
-    
-    // let topCard = document.getElementById("mytopcard");
-    
-    // let xtC = topCard.offsetLeft;
-    // let ytC = topCard.offsetTop;
-    
-    // chosenCardImg.style.left = xcCI + "px";
-    // chosenCardImg.style.top = ycCI + "px";
-    
-    // chosenCardImg.style.left = xtC + "px";
-    // chosenCardImg.style.top = ytC + "px";
-    
+    chosenCardImg.remove();    
     getNewTopCard();
-    // showActivePlayer();
+}
+
+function timeoutForAnimation(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function removeOldTopCard() {
@@ -399,7 +363,6 @@ async function drawACardFromDeck() {
     });
     if (response.ok) {
         let result = await response.json();
-        console.log(result);
         nextPlayer = result.NextPlayer;
 
         let img = createCards(result.Card);
@@ -440,7 +403,6 @@ async function getNewTopCard() {
     });
     if (response.ok) {
         let result = await response.json();
-        console.log(result);
         appendTopCard(result);
         if (result.Color === "Black") {
             document.getElementById("circle-dot").style.background = wildCard;
@@ -449,7 +411,6 @@ async function getNewTopCard() {
         }
         return true;
     } else {
-        console.log("HTTP-Error: " + response.status);
         return false;
     }
 }
@@ -461,7 +422,10 @@ function appendTopCard(response) {
     myElem.appendChild(img)
 }
 
+/********************************************** GAME OVER ******************************************************************/
 
+//Fills Result Modal
+//----------------------------
 function fillResultModal() {
     playerNames.forEach(element => {
         let elements = getEachPlayersSection(element);
@@ -477,6 +441,13 @@ function fillResultModal() {
     resultModal.show();
 }
 
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
+
+//Animation for Game Over
+//----------------------------
+let wheelOfFortune = document.getElementById("wheel-end");
+document.getElementById("result-button").addEventListener("click", function() {
+    let img = document.createElement("img");
+    img.src = "https://media3.giphy.com/media/nLYQKiKkn7nwzvf7Ru/giphy.gif?cid=ecf05e47dusvvhxty7kjz0n561fq2sc045wg1mig4shefwkk&rid=giphy.gif&ct=g";
+    wheelOfFortune.appendChild(img);
+    document.getElementById("wheel-end").firstElementChild.id = "wheel";
+});
