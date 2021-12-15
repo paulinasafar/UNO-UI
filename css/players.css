@@ -75,7 +75,7 @@ img#deck-13:hover {
 }
 
 img.draw-card:hover {
-  margin: 0px 0px 20px 0px;
+    margin: 0px 0px 20px 0px;
     transform: scale(1.2, 1.2);
 }
 
@@ -89,6 +89,7 @@ img#mytopcard:hover {
  * ---------------------------------------------- */
 
 @-webkit-keyframes wrong-player {
+
     0%,
     100% {
         -webkit-transform: translateX(0%);
@@ -96,22 +97,27 @@ img#mytopcard:hover {
         -webkit-transform-origin: 50% 50%;
         transform-origin: 50% 50%;
     }
+
     15% {
         -webkit-transform: translateX(-30px) rotate(-6deg);
         transform: translateX(-30px) rotate(-6deg);
     }
+
     30% {
         -webkit-transform: translateX(15px) rotate(6deg);
         transform: translateX(15px) rotate(6deg);
     }
+
     45% {
         -webkit-transform: translateX(-15px) rotate(-3.6deg);
         transform: translateX(-15px) rotate(-3.6deg);
     }
+
     60% {
         -webkit-transform: translateX(9px) rotate(2.4deg);
         transform: translateX(9px) rotate(2.4deg);
     }
+
     75% {
         -webkit-transform: translateX(-6px) rotate(-1.2deg);
         transform: translateX(-6px) rotate(-1.2deg);
@@ -119,6 +125,7 @@ img#mytopcard:hover {
 }
 
 @keyframes wrong-player {
+
     0%,
     100% {
         -webkit-transform: translateX(0%);
@@ -126,22 +133,27 @@ img#mytopcard:hover {
         -webkit-transform-origin: 50% 50%;
         transform-origin: 50% 50%;
     }
+
     15% {
         -webkit-transform: translateX(-30px) rotate(-6deg);
         transform: translateX(-30px) rotate(-6deg);
     }
+
     30% {
         -webkit-transform: translateX(15px) rotate(6deg);
         transform: translateX(15px) rotate(6deg);
     }
+
     45% {
         -webkit-transform: translateX(-15px) rotate(-3.6deg);
         transform: translateX(-15px) rotate(-3.6deg);
     }
+
     60% {
         -webkit-transform: translateX(9px) rotate(2.4deg);
         transform: translateX(9px) rotate(2.4deg);
     }
+
     75% {
         -webkit-transform: translateX(-6px) rotate(-1.2deg);
         transform: translateX(-6px) rotate(-1.2deg);
@@ -274,6 +286,7 @@ div.active-player>* {
     from {
         box-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 3px #fff, 0 0 4px #fff, 0 0 5px #fff, 0 0 6px #fff, 0 0 7px #fff;
     }
+
     to {
         box-shadow: 0 0 10px #fff, 0 0 30px #737373, 0 0 4px #737373, 0 0 5px #737373, 0 0 6px #737373, 0 0 7px #737373, 0 0 8px #737373;
     }
@@ -340,6 +353,7 @@ img.mytopcard {
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -349,6 +363,7 @@ img.mytopcard {
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -371,21 +386,23 @@ img.mytopcard {
 
 .playedCard {
 
-  /* transition: left 1s ease-out, top 1s ease-out; */
+    /* transition: left 1s ease-out, top 1s ease-out; */
     -webkit-animation: rotate-scale-up 0.5s linear both;
     animation: rotate-scale-up 0.5s linear both;
     /* transition-delay: 3s; */
 }
 
- @-webkit-keyframes rotate-scale-up {
+@-webkit-keyframes rotate-scale-up {
     0% {
         -webkit-transform: scale(1) rotateZ(0);
         transform: scale(1) rotateZ(0);
     }
+
     50% {
         -webkit-transform: scale(2) rotateZ(180deg);
         transform: scale(2) rotateZ(180deg);
     }
+
     100% {
         -webkit-transform: scale(1) rotateZ(360deg);
         transform: scale(1) rotateZ(360deg);
@@ -397,12 +414,14 @@ img.mytopcard {
         -webkit-transform: scale(1) rotateZ(0);
         transform: scale(1) rotateZ(0);
     }
+
     50% {
         -webkit-transform: scale(2) rotateZ(180deg);
         transform: scale(2) rotateZ(180deg);
     }
+
     100% {
         -webkit-transform: scale(1) rotateZ(360deg);
         transform: scale(1) rotateZ(360deg);
     }
-} 
+}

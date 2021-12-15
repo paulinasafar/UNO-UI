@@ -15,6 +15,7 @@ const unoAPI = "http://nowaunoweb.azurewebsites.net/api/game/start";
 const cardsLocal = "cards/";
 const playersSection = { nameDiv: HTMLElement, pointsDiv: HTMLElement, cardsDiv: HTMLElement };
 const playersPointsAndNames = [];
+let check;
 let gameID;
 let topCard;
 let nextPlayer;
@@ -39,7 +40,7 @@ document.getElementById('playerNamesForm').addEventListener('submit', function(e
                 playerName = "";
             }
         }
-        if (playerNames.length === 4) {
+        if (playerNames.length === 4 && check === true) {
             namesModal.hide();
             startGame();
         }
@@ -49,7 +50,6 @@ document.getElementById('playerNamesForm').addEventListener('submit', function(e
 //Listening for players with same names
 //-------------------------------------
 function compareNames() {
-    let check;
     if (inputValues.length > 0) {
         for (let a = 0; a < inputValues.length; a++) {
             let nameToCompare = inputValues[a].value;
