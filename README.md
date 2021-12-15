@@ -26,6 +26,7 @@ WEB-API mit Dokumentation
 * Teamwork rocks!
 * When confused/in doubt - **ASK**!
 * There is always one more bug.
+* Console.log, console.log, console.log
 
 
 ### UNO UI Challenges
