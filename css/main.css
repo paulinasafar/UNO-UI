@@ -193,3 +193,13 @@ div#button-color {
   background: rgba(0, 0, 0, 0.4);
   content: '';
 }
+
+/* ----------------------------------------------
+* Animation for UNO call
+* ---------------------------------------------- */
+
+div#uno-div {
+  font-weight: bold;
+  -webkit-animation: tracking-in-contract-bck-top 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+  animation: tracking-in-contract-bck-top 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+}

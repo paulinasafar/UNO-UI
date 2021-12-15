@@ -30,7 +30,7 @@ let unoDiv;
 
 // Listening for player names + checking if all 4 names are inputed
 //-----------------------------------------------------------------
-document.getElementById('playerNamesForm').addEventListener('submit', function (e) {
+document.getElementById('playerNamesForm').addEventListener('submit', function(e) {
     e.preventDefault();
     if (compareNames()) {
         for (let i = 0; i < inputValues.length; ++i) {
@@ -75,7 +75,7 @@ document.getElementById('playerNamesForm').addEventListener('keyup', compareName
 
 //When "New Game" button is clicked, new game starts
 //---------------------------------------------------
-document.getElementById("button-newgame").addEventListener("click", function () {
+document.getElementById("button-newgame").addEventListener("click", function() {
     location.reload();
 });
 
@@ -141,7 +141,9 @@ function placePlayersAndCards(players) {
         document.querySelector("#player4-allCards").appendChild(card).classList.add("mycard");
     });
 
-    document.getElementById("discard-deck").appendChild(createCards(topCard)).classList.add("mytopcard");
+    let topCardImage = createCards(topCard);
+    topCardImage.id = "mytopcard";
+    document.getElementById("discard-deck").appendChild(topCardImage);
     document.getElementById("circle-dot").style.background = topCard.Color;
 
     showActivePlayer();
@@ -176,7 +178,7 @@ function showCardBack() {
 //Choose a color with Wild Card
 //----------------------------------
 let colorButtonClicked = document.getElementById("color-buttons");
-colorButtonClicked.addEventListener("click", function (event) {
+colorButtonClicked.addEventListener("click", function(event) {
     wildCard = event.target.id;
     console.log(wildCard);
     playCard(colorModalEvent.dataset.value, colorModalEvent.dataset.color, wildCard);
@@ -223,7 +225,7 @@ function getEachPlayersSection(player) {
 //-----------------------------------------
 let onlyCards = document.getElementsByClassName("onlycards");
 for (let i = 0; i < 4; i++) {
-    onlyCards[i].addEventListener("click", function (event) {
+    onlyCards[i].addEventListener("click", function(event) {
 
         if (event.target.parentElement.classList.contains("active-player")) {
             wobble = event.target;
@@ -236,8 +238,7 @@ for (let i = 0; i < 4; i++) {
                 playCard(event.target.dataset.value, event.target.dataset.color, wildCard);
                 console.log(event.target.parentElement);
             }
-        }
-        else {
+        } else {
             setWobble(event.target);
         }
     });
@@ -252,10 +253,12 @@ function setWobble(element) {
     element.id = "wrong-player";
 }
 
+//Animation for Game Over
+//----------------------------
 let wheelOfFortune = document.getElementById("wheel-end");
-document.getElementById("result-button").addEventListener("click", function () {
+document.getElementById("result-button").addEventListener("click", function() {
     let img = document.createElement("img");
-    img.src = "https://gpatuwo.github.io/css-casino/assets/vectors/roulette-wheel.svg";
+    img.src = "https://media3.giphy.com/media/nLYQKiKkn7nwzvf7Ru/giphy.gif?cid=ecf05e47dusvvhxty7kjz0n561fq2sc045wg1mig4shefwkk&rid=giphy.gif&ct=g";
     wheelOfFortune.appendChild(img);
     document.getElementById("wheel-end").firstElementChild.id = "wheel";
 });
@@ -270,6 +273,7 @@ async function playCard(value, color, wildCard) {
     });
     if (response.ok) {
         let result = await response.json();
+        // await sleep(2000);
 
         if (result.error === "WrongColor" || result.error === "Draw4NotAllowed") {
             console.log(result.error);
@@ -278,8 +282,9 @@ async function playCard(value, color, wildCard) {
         } else {
             console.log(result);
             nextPlayer = result.Player;
-            responseForPlayCard(result);
-
+            responseForPlayCard();
+            // await sleep(2000);
+            
             playerNames.forEach(element => {
                 getCards(element);
             });
@@ -290,16 +295,39 @@ async function playCard(value, color, wildCard) {
     }
 }
 //Putting it on the Discard Deck 
-function responseForPlayCard() {
+async function responseForPlayCard() {
     let chosenCardImg = document.getElementById("selected-card");
-    chosenCardImg.remove();
+    chosenCardImg.classList.add("testo");
+    document.getElementById("discard-deck").appendChild(chosenCardImg);
+    await sleep(900);
     removeOldTopCard();
+    chosenCardImg.remove();
+    
+    // let chosenCardImg = document.getElementById("selected-card");
+    
+    // document.getElementById("mytopcard").appendChild(chosenCardImg).classList.add("testo");
+    // await sleep(1000);
+    
+    // let xcCI = chosenCardImg.offsetLeft;
+    // let ycCI = chosenCardImg.offsetTop;
+    
+    // let topCard = document.getElementById("mytopcard");
+    
+    // let xtC = topCard.offsetLeft;
+    // let ytC = topCard.offsetTop;
+    
+    // chosenCardImg.style.left = xcCI + "px";
+    // chosenCardImg.style.top = ycCI + "px";
+    
+    // chosenCardImg.style.left = xtC + "px";
+    // chosenCardImg.style.top = ytC + "px";
+    
     getNewTopCard();
-    showActivePlayer();
+    // showActivePlayer();
 }
 
 async function removeOldTopCard() {
-    let topCardToRemove = document.getElementsByClassName("mytopcard")[0];
+    let topCardToRemove = document.getElementById("mytopcard");
     topCardToRemove.remove();
 }
 
@@ -319,6 +347,7 @@ async function getCards(player) {
     });
     if (response.ok) {
         const result = await response.json();
+        // await sleep(2000);
         let currentPlayersHand = getEachPlayersSection(player).cardsDiv;
         deletePreviousCards(currentPlayersHand);
         result.Cards.forEach(card => {
@@ -332,6 +361,7 @@ async function getCards(player) {
         if (result.Cards.length === 1) {
             if (playersPointsDiv.parentElement.children.length !== 3) {
                 unoDiv = document.createElement("div");
+                unoDiv.id = "uno-div";
                 unoDiv.innerHTML = "UNO!";
                 playersPointsDiv.parentElement.appendChild(unoDiv);
             }
@@ -386,7 +416,7 @@ async function drawACardFromDeck() {
 
 //Player draws a card
 //---------------------
-document.getElementById("draw-deck").addEventListener("click", function (event) {
+document.getElementById("draw-deck").addEventListener("click", function(event) {
     setTurnAround(event.target);
     drawACardFromDeck();
     showActivePlayer();
@@ -402,13 +432,12 @@ function setTurnAround(element) {
 
 async function getNewTopCard() {
 
-    let response = await fetch("http://nowaunoweb.azurewebsites.net/api/Game/TopCard/" + gameID,
-        {
-            method: 'GET',
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-            }
-        });
+    let response = await fetch("http://nowaunoweb.azurewebsites.net/api/Game/TopCard/" + gameID, {
+        method: 'GET',
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        }
+    });
     if (response.ok) {
         let result = await response.json();
         console.log(result);
@@ -427,8 +456,9 @@ async function getNewTopCard() {
 
 function appendTopCard(response) {
     let img = createCards(response);
+    img.id = "mytopcard";
     let myElem = document.getElementById("discard-deck");
-    myElem.appendChild(img).classList.add("mytopcard");
+    myElem.appendChild(img)
 }
 
 
@@ -445,4 +475,8 @@ function fillResultModal() {
     document.getElementById("3rd-place").innerHTML = "<strong>3rd place: Name: </strong>" + playersPointsAndNames[2].name + " - <strong>Points: </strong>" + playersPointsAndNames[2].points;
     document.getElementById("4th-place").innerHTML = "<strong>4th place: Name: </strong>" + playersPointsAndNames[3].name + " - <strong>Points: </strong>" + playersPointsAndNames[3].points;
     resultModal.show();
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

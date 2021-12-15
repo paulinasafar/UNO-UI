@@ -1,67 +1,90 @@
 /* ----------------------------------------------
  * Nav-bar
  * ---------------------------------------------- */
+
 nav {
-    display:flex;
+    display: flex;
     justify-content: flex-start;
     font-size: 20px;
-    line-height:55px;
+    line-height: 55px;
     background-color: rgb(15, 26, 26);
     color: whitesmoke;
-    height:60px;
+    height: 60px;
 }
+
 
 /* ----------------------------------------------
  * Dropdown Menu
  * ---------------------------------------------- */
 
-  div.dropdown {
-      display:flex;
-      justify-content: flex-end;
-  }
+div.dropdown {
+    display: flex;
+    justify-content: flex-end;
+}
 
-  /* Dropdown Button */
-  .dropbtn {
+
+/* Dropdown Button */
+
+.dropbtn {
     background-color: rgb(15, 26, 26);
     color: whitesmoke;
     font-family: 'Playfair Display', serif;
     padding: 0px 30px 0px 0px;
     font-size: 20px;
-    line-height:55px;
+    line-height: 55px;
     border: none;
-  }
-  
-  /* The container <div> - needed to position the dropdown content */
-  .dropdown {
+}
+
+
+/* The container <div> - needed to position the dropdown content */
+
+.dropdown {
     position: relative;
     display: inline-block;
     flex-grow: 5;
-  }
-  
-  /* Dropdown Content (Hidden by Default) */
-  .dropdown-content {
+}
+
+
+/* Dropdown Content (Hidden by Default) */
+
+.dropdown-content {
     display: none;
     position: absolute;
+    top: 60px;
     background-color: #1d302b;
     min-width: 100px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
-  }
-  
-  /* Links inside the dropdown */
-  .dropdown-content a {
+}
+
+
+/* Links inside the dropdown */
+
+.dropdown-content a {
     color: whitesmoke;
     font-family: 'Playfair Display', serif;
     padding: 5px;
     text-decoration: none;
     display: block;
-  }
-  
-  /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {background-color: #ddd;}
-  
-  /* Show the dropdown menu on hover */
-  .dropdown:hover .dropdown-content {display: block;}
-  
-  /* Change the background color of the dropdown button when the dropdown content is shown */
-  .dropdown:hover .dropbtn {background-color: rgb(15, 26, 26);}
+}
+
+
+/* Change color of dropdown links on hover */
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+
+/* Show the dropdown menu on hover */
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+
+.dropdown:hover .dropbtn {
+    background-color: rgb(15, 26, 26);
+}
